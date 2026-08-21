@@ -1,1010 +1,5886 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-     <meta
+    <meta
         name="theme-color"
-        content="#061714">
+        content="#08040b">
 
-    <link
-        rel="manifest"
-        href="manifest.json">
+    <meta
+        name="description"
+        content="A cinematic birthday surprise created especially for My Love... Saji❤️.....">
 
-    <title>
-        A Birthday Surprise ❤️
-    </title>
+    <meta
+        name="mobile-web-app-capable"
+        content="yes">
 
-    <link
-        rel="stylesheet"
-        href="style.css">
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes">
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent">
+
+    <title>A Birthday Surprise ❤️</title>
+
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        html {
+            background: #08040b;
+        }
+
+
+        body {
+
+            min-height: 100dvh;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 25%,
+                    rgba(121, 25, 67, .20),
+                    transparent 38%
+                ),
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(91, 24, 71, .15),
+                    transparent 35%
+                ),
+                #08040b;
+
+            color: #fff7fb;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            -webkit-font-smoothing: antialiased;
+
+            text-rendering: optimizeLegibility;
+
+            overscroll-behavior: none;
+        }
+
+
+        button,
+        input {
+            font: inherit;
+        }
+
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =========================================================
+           APP
+        ========================================================= */
+
+        #app {
+
+            position: relative;
+
+            width: 100%;
+            height: 100dvh;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================================================
+           BACKGROUND
+        ========================================================= */
+
+        .background {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: 0;
+
+            overflow: hidden;
+        }
+
+
+        .background::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: -20%;
+
+            background:
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(255, 87, 145, .08),
+                    transparent 35%
+                );
+
+            animation:
+                backgroundPulse 9s ease-in-out infinite;
+        }
+
+
+        .background::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent 0%,
+                    rgba(255,255,255,.015) 45%,
+                    transparent 55%
+                );
+
+            animation:
+                backgroundSweep 14s linear infinite;
+        }
+
+
+        @keyframes backgroundPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .65;
+            }
+
+            50% {
+                transform: scale(1.12);
+                opacity: 1;
+            }
+
+        }
+
+
+        @keyframes backgroundSweep {
+
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+
+        }
+
+
+        /* =========================================================
+           TOP UI
+        ========================================================= */
+
+        .top-ui {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                calc(14px + env(safe-area-inset-top))
+                20px
+                12px;
+
+            pointer-events: none;
+        }
+
+
+        .chapter {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: rgba(255,255,255,.65);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            letter-spacing: .16em;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+        }
+
+
+        #chapterNumber {
+
+            color: #ff9bbd;
+
+            font-weight: 700;
+        }
+
+
+        #chapterName {
+
+            opacity: .75;
+        }
+
+
+        #soundButton {
+
+            pointer-events: auto;
+
+            width: 38px;
+            height: 38px;
+
+            border: 1px solid rgba(255,255,255,.14);
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.045);
+
+            color: rgba(255,255,255,.8);
+
+            cursor: pointer;
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                border-color .2s ease;
+        }
+
+
+        #soundButton:hover {
+
+            transform: scale(1.05);
+
+            background:
+                rgba(255,255,255,.09);
+        }
+
+
+        #soundButton.muted {
+
+            opacity: .65;
+        }
+
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        .progress-track {
+
+            position: fixed;
+
+            top: calc(62px + env(safe-area-inset-top));
+
+            left: 20px;
+            right: 20px;
+
+            height: 1px;
+
+            z-index: 100;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+
+        #progressBar {
+
+            width: 0%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #8d3158,
+                    #ff8daf
+                );
+
+            box-shadow:
+                0 0 12px rgba(255,100,150,.4);
+
+            transition:
+                width .6s ease;
+        }
+
+
+        /* =========================================================
+           SCENES
+        ========================================================= */
+
+        .scene {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            padding:
+                calc(90px + env(safe-area-inset-top))
+                24px
+                calc(40px + env(safe-area-inset-bottom));
+
+            overflow-y: auto;
+
+            overflow-x: hidden;
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 5;
+
+            scrollbar-width: none;
+
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+        .scene::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .scene.active {
+            display: flex;
+        }
+
+
+        .scene-content {
+
+            position: relative;
+
+            width: min(760px, 100%);
+
+            margin: auto;
+
+            text-align: center;
+
+            opacity: 0;
+        }
+
+
+        .scene.active .scene-content.cinematic-enter {
+
+            animation:
+                cinematicEnter .9s cubic-bezier(.2,.75,.2,1)
+                forwards;
+        }
+
+
+        @keyframes cinematicEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(24px)
+                    scale(.985);
+
+                filter:
+                    blur(8px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+                filter:
+                    blur(0);
+            }
+
+        }
+
+
+        /* =========================================================
+           TYPOGRAPHY
+        ========================================================= */
+
+        .eyebrow {
+
+            margin-bottom: 18px;
+
+            color: #e889a8;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: .3em;
+
+            text-transform: uppercase;
+        }
+
+
+        h1 {
+
+            font-size:
+                clamp(42px, 10vw, 92px);
+
+            line-height: .95;
+
+            font-weight: 400;
+
+            letter-spacing: -.035em;
+
+            text-shadow:
+                0 0 35px rgba(255,100,150,.16);
+        }
+
+
+        h2 {
+
+            font-size:
+                clamp(32px, 7vw, 64px);
+
+            line-height: 1;
+
+            font-weight: 400;
+
+            letter-spacing: -.025em;
+        }
+
+
+        h3 {
+
+            font-size:
+                clamp(22px, 5vw, 34px);
+
+            font-weight: 400;
+        }
+
+
+        .accent {
+            color: #ff91b2;
+        }
+
+
+        .story-text {
+
+            max-width: 620px;
+
+            margin:
+                24px auto 0;
+
+            color:
+                rgba(255,247,251,.70);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                clamp(16px, 2.8vw, 20px);
+
+            line-height: 1.8;
+        }
+
+
+        .small-text {
+
+            margin-top: 14px;
+
+            color:
+                rgba(255,255,255,.45);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero-heart {
+
+            width: 100px;
+            height: 100px;
+
+            margin:
+                0 auto 30px;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 72px;
+
+            color: #ff759f;
+
+            animation:
+                softHeart 2.8s ease-in-out infinite;
+
+            text-shadow:
+                0 0 30px rgba(255,70,130,.55);
+        }
+
+
+        @keyframes softHeart {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+        }
+
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        .button-row {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 34px;
+        }
+
+
+        .cinematic-button {
+
+            min-width: 170px;
+
+            min-height: 50px;
+
+            padding:
+                13px 24px;
+
+            border:
+                1px solid rgba(255,139,175,.35);
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,.08),
+                    rgba(255,255,255,.035)
+                );
+
+            color: #fff7fb;
+
+            cursor: pointer;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: .08em;
+
+            text-transform: uppercase;
+
+            backdrop-filter: blur(14px);
+
+            -webkit-backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,.18);
+
+            transition:
+                transform .2s ease,
+                border-color .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .cinematic-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                rgba(255,139,175,.65);
+
+            background:
+                rgba(255,100,150,.10);
+
+            box-shadow:
+                0 14px 40px rgba(0,0,0,.25);
+        }
+
+
+        .cinematic-button:active,
+        .cinematic-button.pressing {
+
+            transform:
+                scale(.96);
+        }
+
+
+        .cinematic-button:disabled {
+
+            cursor: default;
+
+            opacity: .5;
+
+            transform: none;
+        }
+
+
+        .primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8c3158,
+                    #b84970
+                );
+
+            border-color:
+                rgba(255,160,190,.5);
+
+            box-shadow:
+                0 12px 40px rgba(137,42,82,.35);
+        }
+
+
+        .primary:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #9b3762,
+                    #c6537b
+                );
+        }
+
+
+        /* =========================================================
+           CLUE
+        ========================================================= */
+
+        .clue-zone {
+
+            position: relative;
+
+            width: min(500px, 100%);
+
+            height: 190px;
+
+            margin:
+                35px auto 10px;
+
+            display: grid;
+
+            place-items: center;
+        }
+
+
+        .hidden-clue {
+
+            position: relative;
+
+            width: 90px;
+            height: 90px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(255,150,180,.15);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,120,160,.16),
+                    rgba(255,120,160,.02) 65%,
+                    transparent 70%
+                );
+
+            color:
+                rgba(255,150,180,.25);
+
+            cursor: pointer;
+
+            transition:
+                transform .4s ease,
+                color .4s ease,
+                box-shadow .4s ease;
+        }
+
+
+        .hidden-clue::before {
+
+            content: "♥";
+
+            font-size: 28px;
+        }
+
+
+        .hidden-clue:hover {
+
+            transform: scale(1.1);
+
+            color:
+                rgba(255,170,195,.7);
+
+            box-shadow:
+                0 0 40px rgba(255,80,140,.18);
+        }
+
+
+        .hidden-clue.found {
+
+            color: #ff91b2;
+
+            box-shadow:
+                0 0 50px rgba(255,80,140,.35);
+
+            animation:
+                clueFound .8s ease;
+        }
+
+
+        @keyframes clueFound {
+
+            0% {
+                transform: scale(1);
+            }
+
+            40% {
+                transform: scale(1.35);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+
+        }
+
+
+        .message {
+
+            min-height: 28px;
+
+            margin-top: 20px;
+
+            color:
+                rgba(255,255,255,.62);
+
+            font-size: 16px;
+
+            line-height: 1.6;
+        }
+
+
+        .message.success {
+
+            color:
+                #ff9ab9;
+        }
+
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* =========================================================
+           MEMORY CHOICES
+        ========================================================= */
+
+        .memory-choices {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 14px;
+
+            max-width: 680px;
+
+            margin:
+                32px auto 0;
+        }
+
+
+        .memory-choice {
+
+            min-height: 120px;
+
+            padding: 18px;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color:
+                rgba(255,255,255,.72);
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+
+            transition:
+                transform .25s ease,
+                border-color .25s ease,
+                background .25s ease;
+        }
+
+
+        .memory-choice:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(255,145,175,.35);
+
+            background:
+                rgba(255,100,150,.07);
+        }
+
+
+        .memory-choice.correct {
+
+            border-color:
+                rgba(255,145,175,.7);
+
+            background:
+                rgba(255,80,140,.12);
+
+            color:
+                #fff;
+        }
+
+
+        .memory-choice.wrong {
+
+            animation:
+                shake .45s ease;
+
+            border-color:
+                rgba(255,80,100,.6);
+        }
+
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-8px);
+            }
+
+            75% {
+                transform: translateX(8px);
+            }
+
+        }
+
+
+        /* =========================================================
+           SECRET
+        ========================================================= */
+
+        .secret-symbol {
+
+            font-size: 54px;
+
+            color: #ff89ac;
+
+            margin-bottom: 24px;
+
+            animation:
+                softHeart 3s ease-in-out infinite;
+        }
+
+
+        /* =========================================================
+           DATE INPUT
+        ========================================================= */
+
+        .date-form {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 14px;
+
+            margin-top: 32px;
+        }
+
+
+        #secretDate {
+
+            width: min(320px, 100%);
+
+            height: 56px;
+
+            padding:
+                0 20px;
+
+            border:
+                1px solid rgba(255,255,255,.14);
+
+            border-radius: 14px;
+
+            outline: none;
+
+            background:
+                rgba(255,255,255,.045);
+
+            color: white;
+
+            text-align: center;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 17px;
+
+            letter-spacing: .12em;
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease;
+        }
+
+
+        #secretDate::placeholder {
+
+            color:
+                rgba(255,255,255,.28);
+        }
+
+
+        #secretDate:focus {
+
+            border-color:
+                rgba(255,140,175,.55);
+
+            box-shadow:
+                0 0 30px rgba(255,80,140,.12);
+        }
+
+
+        #secretDate.success-input {
+
+            border-color:
+                rgba(100,220,150,.6);
+        }
+
+
+        #secretDate.input-error {
+
+            animation:
+                inputShake .4s ease;
+
+            border-color:
+                rgba(255,90,110,.7);
+        }
+
+
+        @keyframes inputShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-7px);
+            }
+
+            75% {
+                transform: translateX(7px);
+            }
+
+        }
+
+
+        /* =========================================================
+           REVEAL
+        ========================================================= */
+
+        #scene-pre-reveal {
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(150,35,80,.18),
+                    transparent 45%
+                );
+        }
+
+
+        .reveal-stage {
+
+            min-height: 360px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        #revealText {
+
+            min-height: 70px;
+
+            opacity: 0;
+
+            transform:
+                translateY(12px);
+
+            color:
+                rgba(255,247,251,.9);
+
+            font-size:
+                clamp(24px, 6vw, 48px);
+
+            line-height: 1.35;
+
+            transition:
+                opacity .8s ease,
+                transform .8s ease;
+        }
+
+
+        #revealText.visible {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        #revealHeart {
+
+            margin-top: 32px;
+
+            font-size: 70px;
+
+            color: #ff759f;
+
+            opacity: 0;
+
+            transform: scale(.3);
+
+            text-shadow:
+                0 0 50px rgba(255,70,130,.6);
+
+            transition:
+                opacity 1s ease,
+                transform 1.2s cubic-bezier(.2,.8,.2,1);
+        }
+
+
+        #revealHeart.visible {
+
+            opacity: 1;
+
+            transform: scale(1);
+        }
+
+
+        /* =========================================================
+           MEMORY CINEMATIC
+        ========================================================= */
+
+        .memory-cinematic .scene-content {
+
+            animation:
+                memoryZoom 7s ease-in-out infinite alternate;
+        }
+
+
+        @keyframes memoryZoom {
+
+            from {
+                transform: scale(.985);
+            }
+
+            to {
+                transform: scale(1.025);
+            }
+
+        }
+
+
+        .caption-main {
+
+            font-size:
+                clamp(34px, 8vw, 72px);
+
+            line-height: 1.05;
+
+            font-weight: 400;
+        }
+
+
+        .caption-reveal {
+
+            animation:
+                captionReveal 1s cubic-bezier(.2,.75,.2,1);
+        }
+
+
+        @keyframes captionReveal {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(20px);
+
+                filter:
+                    blur(8px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+                filter:
+                    blur(0);
+            }
+
+        }
+
+
+        .memory-number {
+
+            margin-bottom: 18px;
+
+            color:
+                rgba(255,145,175,.65);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: .25em;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           MEMORY ATMOSPHERES
+        ========================================================= */
+
+        body[data-memory="1"] {
+
+            background:
+                radial-gradient(
+                    circle at 50% 30%,
+                    rgba(90,50,130,.20),
+                    transparent 45%
+                ),
+                #08040b;
+        }
+
+
+        body[data-memory="2"] {
+
+            background:
+                radial-gradient(
+                    circle at 50% 30%,
+                    rgba(150,65,70,.20),
+                    transparent 45%
+                ),
+                #08040b;
+        }
+
+
+        body[data-memory="3"] {
+
+            background:
+                radial-gradient(
+                    circle at 50% 30%,
+                    rgba(65,100,115,.18),
+                    transparent 45%
+                ),
+                #08040b;
+        }
+
+
+        body[data-memory="final"] {
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(175,40,85,.28),
+                    transparent 50%
+                ),
+                #08040b;
+        }
+
+
+        /* =========================================================
+           MEMORY PARTICLES
+        ========================================================= */
+
+        .memory-particle {
+
+            position: absolute;
+
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,170,195,.55);
+
+            box-shadow:
+                0 0 12px rgba(255,100,150,.4);
+
+            pointer-events: none;
+
+            animation:
+                memoryParticle 4s ease-in-out infinite;
+        }
+
+
+        @keyframes memoryParticle {
+
+            0% {
+
+                opacity: 0;
+
+                transform:
+                    translateY(20px)
+                    scale(.6);
+            }
+
+            50% {
+
+                opacity: 1;
+
+                transform:
+                    translateY(-10px)
+                    scale(1);
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-40px)
+                    scale(.4);
+            }
+
+        }
+
+
+        /* =========================================================
+           FLOATING HEARTS
+        ========================================================= */
+
+        .js-heart-layer {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 2;
+
+            pointer-events: none;
+
+            overflow: hidden;
+        }
+
+
+        .js-floating-heart {
+
+            position: absolute;
+
+            bottom: -30px;
+
+            color:
+                rgba(255,130,170,.18);
+
+            animation:
+                floatingHeart linear infinite;
+
+            will-change:
+                transform,
+                opacity;
+        }
+
+
+        @keyframes floatingHeart {
+
+            0% {
+
+                opacity: 0;
+
+                transform:
+                    translateY(0)
+                    rotate(0deg);
+            }
+
+            10% {
+                opacity: .7;
+            }
+
+            90% {
+                opacity: .3;
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-110vh)
+                    rotate(180deg);
+            }
+
+        }
+
+
+        /* =========================================================
+           PARTICLES
+        ========================================================= */
+
+        .js-particle-layer {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1;
+
+            pointer-events: none;
+        }
+
+
+        .js-particle {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,170,195,.5);
+
+            box-shadow:
+                0 0 10px rgba(255,130,170,.3);
+
+            animation:
+                particleFloat ease-in-out infinite;
+        }
+
+
+        @keyframes particleFloat {
+
+            0%,
+            100% {
+
+                opacity: .15;
+
+                transform:
+                    translateY(0)
+                    scale(.7);
+            }
+
+            50% {
+
+                opacity: .8;
+
+                transform:
+                    translateY(-25px)
+                    scale(1.2);
+            }
+
+        }
+
+
+        /* =========================================================
+           TRANSITION
+        ========================================================= */
+
+        #transition {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 500;
+
+            pointer-events: none;
+
+            opacity: 0;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(255,100,150,.12),
+                    rgba(0,0,0,.96)
+                );
+
+            transition:
+                opacity .65s ease;
+        }
+
+
+        #transition.active {
+
+            opacity: 1;
+        }
+
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        #toast {
+
+            position: fixed;
+
+            left: 50%;
+
+            bottom:
+                calc(28px + env(safe-area-inset-bottom));
+
+            z-index: 700;
+
+            max-width:
+                min(90vw, 430px);
+
+            padding:
+                12px 18px;
+
+            border:
+                1px solid rgba(255,150,180,.18);
+
+            border-radius: 999px;
+
+            background:
+                rgba(18,8,15,.82);
+
+            color:
+                rgba(255,247,251,.9);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+
+            text-align: center;
+
+            backdrop-filter: blur(16px);
+
+            -webkit-backdrop-filter: blur(16px);
+
+            opacity: 0;
+
+            transform:
+                translate(-50%, 15px);
+
+            pointer-events: none;
+
+            transition:
+                opacity .3s ease,
+                transform .3s ease;
+        }
+
+
+        #toast.show {
+
+            opacity: 1;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        /* =========================================================
+           MICRO BURST
+        ========================================================= */
+
+        .micro-burst {
+
+            position: fixed;
+
+            z-index: 600;
+
+            width: 1px;
+            height: 1px;
+
+            pointer-events: none;
+        }
+
+
+        .micro-burst span {
+
+            position: absolute;
+
+            width: 5px;
+            height: 5px;
+
+            margin: -2.5px;
+
+            border-radius: 50%;
+
+            background: #ff9cba;
+
+            transform:
+                rotate(var(--angle))
+                translateY(0);
+
+            animation:
+                burstParticle .8s ease-out forwards;
+        }
+
+
+        @keyframes burstParticle {
+
+            to {
+
+                transform:
+                    rotate(var(--angle))
+                    translateY(-45px);
+
+                opacity: 0;
+            }
+
+        }
+
+
+        /* =========================================================
+           HEART EXPLOSION
+        ========================================================= */
+
+        .heart-explosion {
+
+            position: fixed;
+
+            inset: 50% auto auto 50%;
+
+            width: 1px;
+            height: 1px;
+
+            z-index: 650;
+
+            pointer-events: none;
+        }
+
+
+        .heart-explosion span {
+
+            position: absolute;
+
+            font-size: 18px;
+
+            color: #ff87aa;
+
+            transform:
+                translate(-50%, -50%);
+
+            animation:
+                heartExplode 1.6s ease-out forwards;
+        }
+
+
+        @keyframes heartExplode {
+
+            0% {
+
+                opacity: 1;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(.5)
+                    rotate(0deg);
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    translate(
+                        calc(-50% + var(--x)),
+                        calc(-50% + var(--y))
+                    )
+                    scale(1.2)
+                    rotate(var(--r));
+            }
+
+        }
+
+
+        /* =========================================================
+           FINAL HEART
+        ========================================================= */
+
+        .final-heart-animation {
+
+            position: fixed;
+
+            left: 50%;
+            top: 50%;
+
+            z-index: 550;
+
+            color: #ff5f91;
+
+            font-size:
+                clamp(90px, 25vw, 220px);
+
+            opacity: 0;
+
+            transform:
+                translate(-50%, -50%)
+                scale(.15);
+
+            pointer-events: none;
+
+            text-shadow:
+                0 0 60px rgba(255,50,120,.55),
+                0 0 120px rgba(255,50,120,.25);
+
+            transition:
+                opacity 1s ease,
+                transform 1.5s cubic-bezier(.2,.8,.2,1);
+        }
+
+
+        .final-heart-animation.visible {
+
+            opacity: .22;
+
+            transform:
+                translate(-50%, -50%)
+                scale(1);
+        }
+
+
+        .final-spark {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: #ffb0c7;
+
+            transform:
+                translate(-50%, -50%);
+
+            animation:
+                finalSpark 1.8s ease-out forwards;
+        }
+
+
+        @keyframes finalSpark {
+
+            to {
+
+                transform:
+                    translate(
+                        calc(-50% + var(--x)),
+                        calc(-50% + var(--y))
+                    );
+
+                opacity: 0;
+            }
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .top-ui {
+
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+
+            .progress-track {
+
+                left: 15px;
+                right: 15px;
+            }
+
+
+            .scene {
+
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+
+            .memory-choices {
+
+                grid-template-columns:
+                    1fr;
+
+                max-width: 380px;
+            }
+
+
+            .memory-choice {
+
+                min-height: 82px;
+            }
+
+
+            .button-row {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                max-width: 340px;
+
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+
+            .cinematic-button {
+
+                width: 100%;
+            }
+
+        }
+
+
+        @media (max-height: 650px) {
+
+            .scene {
+
+                align-items: flex-start;
+
+                padding-top:
+                    calc(85px + env(safe-area-inset-top));
+            }
+
+
+            .hero-heart {
+
+                margin-bottom: 18px;
+            }
+
+
+            .story-text {
+
+                margin-top: 16px;
+            }
+
+
+            .button-row {
+
+                margin-top: 22px;
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration: .001ms !important;
+
+                animation-iteration-count: 1 !important;
+
+                scroll-behavior: auto !important;
+
+                transition-duration: .001ms !important;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-    <!-- =========================================================
-         BACKGROUND
-    ========================================================== -->
+<div id="app">
 
-    <div class="background">
-        <div class="stars"></div>
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
-    </div>
+
+    <div class="background"
+         aria-hidden="true"></div>
 
 
     <!-- =========================================================
          TOP UI
     ========================================================== -->
 
-    <header class="top-bar">
+    <header class="top-ui">
 
         <div class="chapter">
-            <span id="chapterNumber">00</span>
-            <span class="chapter-line"></span>
-            <span id="chapterName">BEGINNING</span>
+
+            <span id="chapterNumber">
+                01
+            </span>
+
+            <span id="chapterName">
+                BEGINNING
+            </span>
+
         </div>
+
 
         <button
             id="soundButton"
-            class="icon-button"
-            aria-label="Toggle sound">
-            ♫
+            type="button"
+            aria-label="Toggle ambience">
+
+            ×
+
         </button>
 
     </header>
 
 
-    <!-- =========================================================
-         PROGRESS
-    ========================================================== -->
+    <div
+        class="progress-track"
+        aria-hidden="true">
 
-    <div class="progress-container">
-        <div id="progressBar" class="progress-bar"></div>
+        <div id="progressBar"></div>
+
     </div>
 
 
     <!-- =========================================================
-         MAIN EXPERIENCE
+         SCENE 0
     ========================================================== -->
 
-    <main id="app">
+    <section
+        class="scene active"
+        id="scene-opening"
+        data-chapter="01"
+        data-name="BEGINNING">
 
-        <!-- =====================================================
-             SCENE 0
-        ====================================================== -->
+        <div class="scene-content cinematic-enter">
 
-        <section
-            id="scene-0"
-            class="scene active"
-            data-chapter="00"
-            data-name="BEGINNING">
+            <div class="hero-heart">
+                ♥
+            </div>
 
-            <div class="scene-content intro">
+            <div class="eyebrow">
+                A little surprise
+            </div>
 
-                <div class="small-label">
-                    A LITTLE SURPRISE
-                </div>
+            <h1>
+                For My Love
+                <span class="accent"
+                      data-name-target>
+                    Saji❤️....
+                </span>
+            </h1>
 
-                <h1>
-                    I need you<br>
-                    to do something.
-                </h1>
+            <p class="story-text">
+                Today isn't just another day.
+                There is a little story waiting
+                for you to discover.
+            </p>
 
-                <p class="subtext">
-                    But first...
-                </p>
-
-                <div class="pause-space"></div>
-
-                <p class="whisper">
-                    Don't close this.
-                </p>
+            <div class="button-row">
 
                 <button
-                    class="primary-button"
+                    class="cinematic-button primary"
+                    type="button"
                     data-next="1">
 
-                    BEGIN
-
-                    <span>→</span>
+                    Begin
 
                 </button>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =====================================================
-             SCENE 1
-        ====================================================== -->
+    <!-- =========================================================
+         SCENE 1
+    ========================================================== -->
 
-        <section
-            id="scene-1"
-            class="scene"
-            data-chapter="01"
-            data-name="THE FIRST CLUE">
+    <section
+        class="scene"
+        id="scene-welcome"
+        data-chapter="02"
+        data-name="THE STORY">
 
-            <div class="scene-content">
+        <div class="scene-content">
 
-                <div class="chapter-number">
-                    01
-                </div>
+            <div class="eyebrow">
+                Before we begin
+            </div>
 
-                <h2>
-                    Tonight,
-                    <br>
-                    I need you to trust me.
-                </h2>
+            <h2>
+                Take your time.
+            </h2>
 
-                <p class="story-text">
-                    There are a few things I want you
-                    to remember.
-                </p>
+            <p class="story-text">
+                Don't rush through this.
+                Every little part has been placed
+                here for a reason.
+            </p>
 
-                <p class="story-text muted">
-                    But I'm not going to show you
-                    everything yet.
-                </p>
+            <p class="small-text">
+                There is something hidden nearby.
+            </p>
 
-                <div class="mystery-symbol">
-                    <div class="symbol-ring"></div>
-                    <span>?</span>
-                </div>
+            <div class="button-row">
 
                 <button
-                    class="primary-button"
+                    class="cinematic-button primary"
+                    type="button"
                     data-next="2">
 
-                    SHOW ME
-
-                    <span>→</span>
+                    Continue
 
                 </button>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =====================================================
-             SCENE 2
-        ====================================================== -->
+    <!-- =========================================================
+         SCENE 2
+    ========================================================== -->
 
-        <section
-            id="scene-2"
-            class="scene"
-            data-chapter="02"
-            data-name="THE MEMORY">
+    <section
+        class="scene"
+        id="scene-clue"
+        data-chapter="03"
+        data-name="FIRST CLUE">
 
-            <div class="scene-content">
+        <div class="scene-content">
 
-                <div class="chapter-number">
-                    02
-                </div>
+            <div class="eyebrow">
+                Look closely
+            </div>
 
-                <h2>
-                    Look carefully.
-                </h2>
+            <h2>
+                Something is hiding here.
+            </h2>
 
-                <p class="story-text">
-                    Something important is hidden
-                    in this memory.
-                </p>
+            <div class="clue-zone">
 
+                <button
+                    id="hiddenClue"
+                    class="hidden-clue"
+                    type="button"
+                    aria-label="Find the hidden clue">
+                </button>
 
-                <!-- PLACEHOLDER PHOTO -->
-                <div
-                    id="memoryPhoto"
-                    class="memory-photo">
+            </div>
 
-                    <div class="photo-placeholder">
+            <div
+                id="clueMessage"
+                class="message">
 
-                        <div class="photo-icon">
-                            ♡
-                        </div>
+                Maybe the answer is closer
+                than you think...
 
-                        <span>
-                            YOUR PHOTO
-                        </span>
-
-                        <small>
-                            Replace this area with
-                            your first memory photo
-                        </small>
-
-                    </div>
+            </div>
 
 
-                    <!-- Hidden clue -->
-                    <button
-                        id="hiddenClue"
-                        class="hidden-clue"
-                        aria-label="Find the hidden clue">
-
-                        ✦
-
-                    </button>
-
-                </div>
-
-
-                <p
-                    id="clueMessage"
-                    class="clue-message">
-
-                    Find the little light.
-                </p>
-
+            <div class="button-row">
 
                 <button
                     id="memoryContinue"
-                    class="primary-button hidden"
+                    class="cinematic-button primary hidden"
+                    type="button"
                     data-next="3">
 
-                    I FOUND IT
-
-                    <span>→</span>
+                    I found it
 
                 </button>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =====================================================
-             SCENE 3
-        ====================================================== -->
+    <!-- =========================================================
+         SCENE 3
+    ========================================================== -->
 
-        <section
-            id="scene-3"
-            class="scene"
-            data-chapter="03"
-            data-name="A QUESTION">
+    <section
+        class="scene"
+        id="scene-choice"
+        data-chapter="04"
+        data-name="A MEMORY">
 
-            <div class="scene-content">
+        <div class="scene-content">
 
-                <div class="chapter-number">
-                    03
-                </div>
+            <div class="eyebrow">
+                One question
+            </div>
 
-                <h2>
-                    Do you remember?
-                </h2>
+            <h2>
+                Which one feels right?
+            </h2>
 
-                <p class="story-text">
-                    Every beautiful story has
-                    a moment where everything changes.
-                </p>
-
-                <p class="question">
-                    Which one feels like
-                    <strong>us?</strong>
-                </p>
+            <p class="story-text">
+                There is only one answer I was
+                hoping you would choose.
+            </p>
 
 
-                <div class="choice-grid">
+            <div class="memory-choices">
 
-                    <button
-                        class="memory-choice"
-                        data-correct="false">
+                <button
+                    class="memory-choice"
+                    type="button"
+                    data-correct="false">
 
-                        <span>01</span>
-                        <div class="choice-image">
-                            ♡
-                        </div>
+                    A quiet evening
 
-                    </button>
+                </button>
 
 
-                    <button
-                        class="memory-choice"
-                        data-correct="true">
+                <button
+                    class="memory-choice"
+                    type="button"
+                    data-correct="true">
 
-                        <span>02</span>
-                        <div class="choice-image">
-                            ✦
-                        </div>
+                    A beautiful birthday
 
-                    </button>
+                </button>
 
 
-                    <button
-                        class="memory-choice"
-                        data-correct="false">
+                <button
+                    class="memory-choice"
+                    type="button"
+                    data-correct="false">
 
-                        <span>03</span>
-                        <div class="choice-image">
-                            ♡
-                        </div>
+                    Just another day
 
-                    </button>
+                </button>
 
-
-                    <button
-                        class="memory-choice"
-                        data-correct="false">
-
-                        <span>04</span>
-                        <div class="choice-image">
-                            ✧
-                        </div>
-
-                    </button>
-
-                </div>
+            </div>
 
 
-                <p
-                    id="choiceMessage"
-                    class="choice-message">
+            <div
+                id="choiceMessage"
+                class="message">
 
-                </p>
+            </div>
 
+
+            <div class="button-row">
 
                 <button
                     id="choiceContinue"
-                    class="primary-button hidden"
+                    class="cinematic-button primary hidden"
+                    type="button"
                     data-next="4">
 
-                    CONTINUE
-
-                    <span>→</span>
+                    Continue
 
                 </button>
 
             </div>
 
-        </section>
+        </div>
+
+    </section>
 
 
-        <!-- =====================================================
-             SCENE 4
-        ====================================================== -->
+    <!-- =========================================================
+         SCENE 4
+    ========================================================== -->
 
-        <section
-            id="scene-4"
-            class="scene"
-            data-chapter="04"
-            data-name="THERE IS MORE">
+    <section
+        class="scene"
+        id="scene-between"
+        data-chapter="05"
+        data-name="ALMOST THERE">
 
-            <div class="scene-content">
+        <div class="scene-content">
 
-                <div class="chapter-number">
-                    04
-                </div>
+            <div class="secret-symbol">
+                ♡
+            </div>
 
-                <div class="breathing-heart">
+            <div class="eyebrow">
+                Almost there
+            </div>
+
+            <h2>
+                There is one more door.
+            </h2>
+
+            <p class="story-text">
+                And behind it is something
+                I have been waiting to give you.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    class="cinematic-button primary"
+                    type="button"
+                    data-next="5">
+
+                    Open the door
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SCENE 5
+    ========================================================== -->
+
+    <section
+        class="scene"
+        id="scene-secret"
+        data-chapter="06"
+        data-name="THE SECRET">
+
+        <div class="scene-content">
+
+            <div class="secret-symbol">
+                ♥
+            </div>
+
+            <div class="eyebrow">
+                A small secret
+            </div>
+
+            <h2>
+                Are you ready?
+            </h2>
+
+            <p class="story-text">
+                There is something only you should
+                know to continue.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    id="clueButton"
+                    class="cinematic-button primary"
+                    type="button">
+
+                    Show me the clue
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SCENE 6
+    ========================================================== -->
+
+    <section
+        class="scene"
+        id="scene-clue-input"
+        data-chapter="07"
+        data-name="THE CLUE">
+
+        <div class="scene-content">
+
+            <div class="eyebrow">
+                Remember
+            </div>
+
+            <h2>
+                A special day.
+            </h2>
+
+            <p class="story-text">
+                Think of the date that belongs
+                to this whole little story.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    class="cinematic-button primary"
+                    type="button"
+                    data-next="7">
+
+                    I know it
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SCENE 7
+    ========================================================== -->
+
+    <section
+        class="scene"
+        id="scene-answer"
+        data-chapter="08"
+        data-name="THE ANSWER">
+
+        <div class="scene-content">
+
+            <div class="eyebrow">
+                One last answer
+            </div>
+
+            <h2>
+                What is the date?
+            </h2>
+
+            <p class="story-text">
+                Enter it exactly as you remember it.
+            </p>
+
+
+            <div class="date-form">
+
+                <input
+                    id="secretDate"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    maxlength="10"
+                    placeholder="DD / MM / YYYY"
+                    aria-label="Birthday date">
+
+
+                <button
+                    id="dateButton"
+                    class="cinematic-button primary"
+                    type="button">
+
+                    Unlock
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="dateMessage"
+                class="message">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         SCENE 8
+    ========================================================== -->
+
+    <section
+        class="scene"
+        id="scene-pre-reveal"
+        data-chapter="09"
+        data-name="THE REVEAL">
+
+        <div class="scene-content">
+
+            <div class="reveal-stage">
+
+                <div id="revealText"></div>
+
+                <div
+                    id="revealHeart"
+                    aria-hidden="true">
+
                     ♥
                 </div>
 
-                <h2>
-                    You found it.
-                </h2>
-
-                <p class="story-text">
-
-                    But that was only
-                    the beginning.
-
-                </p>
-
-                <p class="story-text highlight">
-
-                    There is much more
-                    waiting for you.
-
-                </p>
-
-                <div class="countdown-dots">
-
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-
-                </div>
-
-                <button
-                    class="primary-button"
-                    data-next="5">
-
-                    KEEP GOING
-
-                    <span>→</span>
-
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             SCENE 5
-        ====================================================== -->
-
-       <!-- =====================================================
-     STAGE 2 — FINAL LOCK
-====================================================== -->
-
-<section
-    id="scene-5"
-    class="scene"
-    data-chapter="05"
-    data-name="THE SECRET">
-
-    <div class="scene-content final-mystery">
-
-        <div class="chapter-number">
-            05
-        </div>
-
-        <div class="lock" id="mainLock">
-
-            <div class="lock-body"></div>
-
-            <div class="lock-ring"></div>
-
-        </div>
-
-        <h2 id="lockTitle">
-            One last thing...
-        </h2>
-
-        <p
-            id="lockText"
-            class="story-text">
-
-            I promise you,
-            this is worth discovering.
-
-        </p>
-
-        <button
-            id="finalButton"
-            class="primary-button">
-
-            UNLOCK
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STAGE 2 — SECRET
-====================================================== -->
-
-<section
-    id="scene-secret"
-    class="scene secret-scene"
-    data-chapter="06"
-    data-name="THE CLUE">
-
-    <div class="scene-content">
-
-        <div class="chapter-number">
-            06
-        </div>
-
-        <div class="secret-symbol">
-            ✦
-        </div>
-
-        <h2>
-            You're still here.
-        </h2>
-
-        <p class="story-text">
-
-            Good.
-
-        </p>
-
-        <p class="story-text muted">
-
-            But you still haven't
-            discovered the real secret.
-
-        </p>
-
-        <div class="secret-card">
-
-            <div class="secret-card-label">
-                YOUR NEXT CLUE
-            </div>
-
-            <div class="secret-card-text">
-                Something important
-                happened on a special day.
-            </div>
-
-            <div class="secret-hint">
-                You already know the answer.
             </div>
 
         </div>
 
-        <button
-            id="clueButton"
-            class="primary-button">
-
-            FIND THE CLUE
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =====================================================
-     STAGE 2 — SECRET INPUT
-====================================================== -->
+    <!-- =========================================================
+         SCENE 9
+    ========================================================== -->
 
-<section
-    id="scene-clue-input"
-    class="scene"
-    data-chapter="07"
-    data-name="THE ANSWER">
+    <section
+        class="scene"
+        id="scene-memory-intro"
+        data-chapter="10"
+        data-name="MEMORIES">
 
-    <div class="scene-content">
+        <div class="scene-content">
 
-        <div class="chapter-number">
-            07
-        </div>
-
-        <h2>
-            Think carefully.
-        </h2>
-
-        <p class="story-text">
-
-            What date would you never forget?
-
-        </p>
-
-        <div class="date-input-wrapper">
-
-            <input
-                id="secretDate"
-                class="secret-input"
-                type="text"
-                inputmode="numeric"
-                maxlength="10"
-                placeholder="DD / MM / YYYY"
-                autocomplete="off">
-
-        </div>
-
-        <p
-            id="dateMessage"
-            class="date-message">
-
-        </p>
-
-        <button
-            id="dateButton"
-            class="primary-button">
-
-            UNLOCK
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STAGE 2 — ANSWER
-====================================================== -->
-
-<section
-    id="scene-answer"
-    class="scene"
-    data-chapter="08"
-    data-name="THE ANSWER">
-
-    <div class="scene-content answer-scene">
-
-        <div class="chapter-number">
-            08
-        </div>
-
-        <div class="answer-heart">
-            ♥
-        </div>
-
-        <h2>
-            That's it.
-        </h2>
-
-        <p class="story-text">
-
-            You remembered.
-
-        </p>
-
-        <p class="story-text highlight">
-
-            And now...
-            I can finally tell you
-            why I made all of this.
-
-        </p>
-
-        <div class="breathing-dots">
-
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
-
-        <button
-            id="revealButton"
-            class="primary-button">
-
-            TELL ME
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STAGE 2 — PRE REVEAL
-====================================================== -->
-
-<section
-    id="scene-pre-reveal"
-    class="scene pre-reveal"
-    data-chapter="09"
-    data-name="ONE LAST MOMENT">
-
-    <div class="scene-content">
-
-        <div
-            id="revealText"
-            class="reveal-text">
-
-        </div>
-
-        <div
-            id="revealHeart"
-            class="reveal-heart">
-
-            ♥
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- =====================================================
-     STAGE 3 — MEMORY INTRO
-====================================================== -->
-
-<section
-    id="scene-memory-intro"
-    class="scene stage3-scene"
-    data-chapter="10"
-    data-name="A MEMORY">
-
-    <div class="scene-content">
-
-        <div class="memory-intro">
-
-            <div class="memory-small-text">
-                I kept something for you...
+            <div class="eyebrow">
+                A few moments
             </div>
 
             <div
                 id="memoryIntroText"
-                class="memory-big-text">
+                class="caption-main">
+
             </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =====================================================
-     STAGE 3 — PHOTO MEMORY 1
-====================================================== -->
+    <!-- =========================================================
+         SCENE 10
+    ========================================================== -->
 
-<section
-    id="scene-memory-1"
-    class="scene photo-memory-scene"
-    data-chapter="11"
-    data-name="A MOMENT">
+    <section
+        class="scene"
+        id="scene-memory-1"
+        data-chapter="11"
+        data-name="MEMORY ONE">
 
-    <div class="photo-memory">
+        <div class="scene-content">
 
-        <div class="photo-number">
-            MEMORY 01
-        </div>
-
-        <div class="photo-frame">
-
-            <img
-                src="photo1.jpg"
-                alt="A special memory"
-                class="memory-photo">
-
-            <div class="photo-overlay"></div>
-
-        </div>
-
-        <div class="photo-caption">
-
-            <div class="caption-small">
-                DO YOU REMEMBER THIS?
+            <div class="memory-number">
+                Memory 01
             </div>
 
-            <div class="caption-main">
-                Some moments become
-                memories forever.
-            </div>
-
-        </div>
-
-        <button
-            id="memory1Button"
-            class="primary-button">
-
-            I REMEMBER
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STAGE 3 — PHOTO MEMORY 2
-====================================================== -->
-
-<section
-    id="scene-memory-2"
-    class="scene photo-memory-scene"
-    data-chapter="12"
-    data-name="ANOTHER MOMENT">
-
-    <div class="photo-memory">
-
-        <div class="photo-number">
-            MEMORY 02
-        </div>
-
-        <div class="photo-frame">
-
-            <img
-                src="photo2.jpg"
-                alt="Another special memory"
-                class="memory-photo">
-
-            <div class="photo-overlay"></div>
-
-        </div>
-
-        <div class="photo-caption">
-
-            <div class="caption-small">
-                AND THEN THERE WAS THIS...
-            </div>
-
-            <div class="caption-main">
-                I would choose
-                this moment again.
-            </div>
-
-        </div>
-
-        <button
-            id="memory2Button"
-            class="primary-button">
-
-            ONE MORE
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STAGE 3 — PHOTO MEMORY 3
-====================================================== -->
-
-<section
-    id="scene-memory-3"
-    class="scene photo-memory-scene"
-    data-chapter="13"
-    data-name="THE MEMORIES">
-
-    <div class="photo-memory">
-
-        <div class="photo-number">
-            MEMORY 03
-        </div>
-
-        <div class="photo-frame">
-
-            <img
-                src="photo3.jpg"
-                alt="A beautiful memory"
-                class="memory-photo">
-
-            <div class="photo-overlay"></div>
-
-        </div>
-
-        <div class="photo-caption">
-
-            <div class="caption-small">
-                THREE MEMORIES
-            </div>
-
-            <div class="caption-main">
-                And somehow...
-                I still want more.
-            </div>
-
-        </div>
-
-        <button
-            id="memory3Button"
-            class="primary-button">
-
-            CONTINUE
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STAGE 3 — SOMETHING MISSING
-====================================================== -->
-
-<section
-    id="scene-memory-final"
-    class="scene stage3-final"
-    data-chapter="14"
-    data-name="ONE THING">
-
-    <div class="scene-content">
-
-        <div class="final-memory-text">
-
-            <div class="memory-small-text">
-                But...
-            </div>
-
-            <h2>
-                Something is missing.
+            <h2 class="caption-main">
+                The moments
+                that make us smile.
             </h2>
 
             <p class="story-text">
-                Photos can remind us of
-                beautiful moments.
+                Some moments are small,
+                but somehow they stay with us.
             </p>
 
-            <p class="story-text highlight">
-                But they can't say
-                everything I want to say.
-            </p>
+            <div class="button-row">
+
+                <button
+                    id="memory1Button"
+                    class="cinematic-button primary"
+                    type="button">
+
+                    Next memory
+
+                </button>
+
+            </div>
 
         </div>
 
-        <button
-            id="memoryFinalButton"
-            class="primary-button">
-
-            LISTEN
-
-            <span>→</span>
-
-        </button>
-
-    </div>
-
-</section>
-
-
-    </main>
+    </section>
 
 
     <!-- =========================================================
-         FLASH / TRANSITION
+         SCENE 11
     ========================================================== -->
 
-    <div id="transition" class="transition"></div>
+    <section
+        class="scene"
+        id="scene-memory-2"
+        data-chapter="12"
+        data-name="MEMORY TWO">
+
+        <div class="scene-content">
+
+            <div class="memory-number">
+                Memory 02
+            </div>
+
+            <h2 class="caption-main">
+                The moments
+                worth keeping.
+            </h2>
+
+            <p class="story-text">
+                Time moves quickly,
+                but the right memories remain.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    id="memory2Button"
+                    class="cinematic-button primary"
+                    type="button">
+
+                    Next memory
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
     <!-- =========================================================
-         TOAST
+         SCENE 12
     ========================================================== -->
 
-    <div
-        id="toast"
-        class="toast">
+    <section
+        class="scene"
+        id="scene-memory-3"
+        data-chapter="13"
+        data-name="MEMORY THREE">
 
-    </div>
+        <div class="scene-content">
+
+            <div class="memory-number">
+                Memory 03
+            </div>
+
+            <h2 class="caption-main">
+                And the people
+                who make them special.
+            </h2>
+
+            <p class="story-text">
+                Some people quietly become
+                unforgettable parts of our story.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    id="memory3Button"
+                    class="cinematic-button primary"
+                    type="button">
+
+                    One last thing
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
-    <script src="script.js"></script>
+    <!-- =========================================================
+         SCENE 13
+    ========================================================== -->
+
+    <section
+        class="scene"
+        id="scene-memory-final"
+        data-chapter="14"
+        data-name="HAPPY BIRTHDAY">
+
+        <div class="scene-content">
+
+            <div class="hero-heart">
+                ♥
+            </div>
+
+            <h2>
+                Happy Birthday,
+                <span
+                    class="accent"
+                    data-name-target>
+                    Saji❤️....
+                </span>.
+            </h2>
+
+            <p class="story-text">
+                Some people become memories.
+            </p>
+
+            <p class="story-text">
+                You became one of my favourite
+                parts of life.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    id="memoryFinalButton"
+                    class="cinematic-button primary"
+                    type="button">
+
+                    Finish
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- =============================================================
+     EFFECT LAYERS
+============================================================== -->
+
+<div
+    id="transition"
+    aria-hidden="true">
+</div>
+
+
+<div
+    id="toast"
+    role="status"
+    aria-live="polite">
+</div>
+
 
 <script>
-    if ("serviceWorker" in navigator) {
 
-        window.addEventListener(
-            "load",
+"use strict";
+
+
+/* =============================================================
+   SAJINA — BIRTHDAY SURPRISE
+   PRODUCTION JAVASCRIPT
+============================================================= */
+
+
+/* =============================================================
+   CONFIGURATION
+============================================================= */
+
+const CONFIG = {
+
+    name: "Saji❤️..",
+
+    birthday: "22/08/2000",
+
+    birthdayDisplay: "22 August 2000",
+
+    typingSpeed: 42,
+
+    transitionDuration: 650,
+
+    swipeThreshold: 70,
+
+    toastDuration: 2600,
+
+    particles: {
+        count: 42
+    }
+
+};
+
+
+/* =============================================================
+   APPLICATION STATE
+============================================================= */
+
+const state = {
+
+    currentScene: 0,
+
+    soundEnabled: false,
+
+    clueFound: false,
+
+    correctChoice: false,
+
+    secretUnlocked: false,
+
+    stage2Started: false,
+
+    stage3Started: false,
+
+    revealStarted: false,
+
+    experienceComplete: false,
+
+    transitioning: false,
+
+    touchStartX: 0,
+
+    touchStartY: 0,
+
+    timers: new Set(),
+
+    initialized: false
+
+};
+
+
+/* =============================================================
+   DOM REFERENCES
+============================================================= */
+
+const scenes =
+    Array.from(
+        document.querySelectorAll(".scene")
+    );
+
+
+const app =
+    document.getElementById("app");
+
+
+const progressBar =
+    document.getElementById("progressBar");
+
+
+const chapterNumber =
+    document.getElementById("chapterNumber");
+
+
+const chapterName =
+    document.getElementById("chapterName");
+
+
+const transition =
+    document.getElementById("transition");
+
+
+const toast =
+    document.getElementById("toast");
+
+
+const soundButton =
+    document.getElementById("soundButton");
+
+
+/* =============================================================
+   STAGE 1
+============================================================= */
+
+const hiddenClue =
+    document.getElementById("hiddenClue");
+
+
+const clueMessage =
+    document.getElementById("clueMessage");
+
+
+const memoryContinue =
+    document.getElementById("memoryContinue");
+
+
+const choiceMessage =
+    document.getElementById("choiceMessage");
+
+
+const choiceContinue =
+    document.getElementById("choiceContinue");
+
+
+/* =============================================================
+   STAGE 2
+============================================================= */
+
+const finalButton =
+    document.getElementById("finalButton");
+
+
+const clueButton =
+    document.getElementById("clueButton");
+
+
+const secretDate =
+    document.getElementById("secretDate");
+
+
+const dateButton =
+    document.getElementById("dateButton");
+
+
+const dateMessage =
+    document.getElementById("dateMessage");
+
+
+const revealButton =
+    document.getElementById("revealButton");
+
+
+const revealText =
+    document.getElementById("revealText");
+
+
+const revealHeart =
+    document.getElementById("revealHeart");
+
+
+/* =============================================================
+   STAGE 3
+============================================================= */
+
+const memoryIntroText =
+    document.getElementById(
+        "memoryIntroText"
+    );
+
+
+const memory1Button =
+    document.getElementById(
+        "memory1Button"
+    );
+
+
+const memory2Button =
+    document.getElementById(
+        "memory2Button"
+    );
+
+
+const memory3Button =
+    document.getElementById(
+        "memory3Button"
+    );
+
+
+const memoryFinalButton =
+    document.getElementById(
+        "memoryFinalButton"
+    );
+
+
+/* =============================================================
+   INITIALIZATION
+============================================================= */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialize,
+        {
+            once: true
+        }
+    );
+
+} else {
+
+    initialize();
+
+}
+
+
+function initialize() {
+
+    if (state.initialized) {
+        return;
+    }
+
+
+    state.initialized = true;
+
+
+    /*
+     * Always start from the first scene.
+     */
+
+    activateScene(
+        0,
+        false
+    );
+
+
+    personalizeExperience();
+
+    setupNavigation();
+
+    setupClue();
+
+    setupChoices();
+
+    setupSound();
+
+    setupStage2();
+
+    setupStage3();
+
+    setupSwipeNavigation();
+
+    setupKeyboardNavigation();
+
+    setupButtonEffects();
+
+    createRomanticParticles();
+
+    createFloatingHearts();
+
+    updateUI();
+
+}
+
+
+/* =============================================================
+   PERSONALIZATION
+============================================================= */
+
+function personalizeExperience() {
+
+    document
+        .querySelectorAll("[data-name-target]")
+        .forEach(element => {
+
+            element.textContent =
+                CONFIG.name;
+
+        });
+
+
+    document
+        .querySelectorAll("[data-birthday-target]")
+        .forEach(element => {
+
+            element.textContent =
+                CONFIG.birthdayDisplay;
+
+        });
+
+
+    document.title =
+        `A Birthday Surprise for ${CONFIG.name} ❤️`;
+
+
+    if (secretDate) {
+
+        secretDate.placeholder =
+            "DD / MM / YYYY";
+
+    }
+
+}
+
+
+/* =============================================================
+   NAVIGATION SETUP
+============================================================= */
+
+function setupNavigation() {
+
+    document
+        .querySelectorAll("[data-next]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const next =
+                        Number(
+                            button.dataset.next
+                        );
+
+                    if (
+                        Number.isInteger(next)
+                    ) {
+
+                        goToScene(next);
+
+                    }
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =============================================================
+   SCENE INDEX
+============================================================= */
+
+function getSceneIndex(id) {
+
+    const scene =
+        document.getElementById(id);
+
+
+    if (!scene) {
+        return -1;
+    }
+
+
+    return scenes.indexOf(scene);
+
+}
+
+
+/* =============================================================
+   SCENE ACCESS
+============================================================= */
+
+function canEnterScene(sceneIndex) {
+
+    if (
+        sceneIndex < 0 ||
+        sceneIndex >= scenes.length
+    ) {
+
+        return false;
+
+    }
+
+
+    /*
+     * Prevent jumping multiple scenes forward.
+     */
+
+    if (
+        sceneIndex >
+        state.currentScene + 1
+    ) {
+
+        return false;
+
+    }
+
+
+    /*
+     * Scene 2 clue.
+     */
+
+    if (
+        state.currentScene === 2 &&
+        sceneIndex > 2 &&
+        !state.clueFound
+    ) {
+
+        showToast(
+            "There is still a little secret to find..."
+        );
+
+        return false;
+
+    }
+
+
+    /*
+     * Scene 3 answer.
+     */
+
+    if (
+        state.currentScene === 3 &&
+        sceneIndex > 3 &&
+        !state.correctChoice
+    ) {
+
+        showToast(
+            "Choose carefully..."
+        );
+
+        return false;
+
+    }
+
+
+    /*
+     * Scene 7 requires correct date.
+     */
+
+    if (
+        state.currentScene === 7 &&
+        sceneIndex > 7 &&
+        !state.secretUnlocked
+    ) {
+
+        showToast(
+            "Think carefully..."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =============================================================
+   GO TO SCENE
+============================================================= */
+
+function goToScene(
+    sceneIndex,
+    animated = true
+) {
+
+    if (state.transitioning) {
+        return;
+    }
+
+
+    if (!canEnterScene(sceneIndex)) {
+        return;
+    }
+
+
+    if (
+        sceneIndex ===
+        state.currentScene
+    ) {
+
+        return;
+
+    }
+
+
+    if (!animated) {
+
+        activateScene(
+            sceneIndex,
+            false
+        );
+
+        onSceneEntered(
+            sceneIndex
+        );
+
+        return;
+
+    }
+
+
+    state.transitioning = true;
+
+
+    if (transition) {
+
+        transition.classList.add(
+            "active"
+        );
+
+    }
+
+
+    const transitionTimer =
+        setTimeout(() => {
+
+            activateScene(
+                sceneIndex,
+                true
+            );
+
+
+            const finishTimer =
+                setTimeout(() => {
+
+                    if (transition) {
+
+                        transition.classList.remove(
+                            "active"
+                        );
+
+                    }
+
+
+                    state.transitioning = false;
+
+
+                    onSceneEntered(
+                        sceneIndex
+                    );
+
+                }, 120);
+
+
+            trackTimer(
+                finishTimer
+            );
+
+
+        }, CONFIG.transitionDuration);
+
+
+    trackTimer(
+        transitionTimer
+    );
+
+}
+
+
+/* =============================================================
+   ACTIVATE SCENE
+============================================================= */
+
+function activateScene(
+    sceneIndex,
+    runEffects = true
+) {
+
+    if (
+        sceneIndex < 0 ||
+        sceneIndex >= scenes.length
+    ) {
+
+        return;
+
+    }
+
+
+    scenes.forEach(scene => {
+
+        scene.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    const scene =
+        scenes[sceneIndex];
+
+
+    if (!scene) {
+        return;
+    }
+
+
+    scene.classList.add(
+        "active"
+    );
+
+
+    state.currentScene =
+        sceneIndex;
+
+
+    updateUI();
+
+
+    scene.scrollTop = 0;
+
+
+    if (runEffects) {
+
+        restartSceneAnimations(
+            scene
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   SCENE ENTER
+============================================================= */
+
+function onSceneEntered(sceneIndex) {
+
+    const scene =
+        scenes[sceneIndex];
+
+
+    if (!scene) {
+        return;
+    }
+
+
+    switch (scene.id) {
+
+        case "scene-memory-intro":
+
+            startStage3Intro();
+
+            break;
+
+
+        case "scene-memory-1":
+
+            animateMemoryScene(
+                scene,
+                1
+            );
+
+            break;
+
+
+        case "scene-memory-2":
+
+            animateMemoryScene(
+                scene,
+                2
+            );
+
+            break;
+
+
+        case "scene-memory-3":
+
+            animateMemoryScene(
+                scene,
+                3
+            );
+
+            break;
+
+
+        case "scene-memory-final":
+
+            animateFinalMemoryScene();
+
+            break;
+
+    }
+
+}
+
+
+/* =============================================================
+   RESTART ANIMATION
+============================================================= */
+
+function restartSceneAnimations(scene) {
+
+    const content =
+        scene.querySelector(
+            ".scene-content"
+        );
+
+
+    if (!content) {
+        return;
+    }
+
+
+    content.classList.remove(
+        "cinematic-enter"
+    );
+
+
+    void content.offsetWidth;
+
+
+    content.classList.add(
+        "cinematic-enter"
+    );
+
+}
+
+
+/* =============================================================
+   UI UPDATE
+============================================================= */
+
+function updateUI() {
+
+    const scene =
+        scenes[state.currentScene];
+
+
+    if (!scene) {
+        return;
+    }
+
+
+    const number =
+        scene.dataset.chapter ||
+        "00";
+
+
+    const name =
+        scene.dataset.name ||
+        "BEGINNING";
+
+
+    if (chapterNumber) {
+
+        chapterNumber.textContent =
+            number;
+
+    }
+
+
+    if (chapterName) {
+
+        chapterName.textContent =
+            name;
+
+    }
+
+
+    const denominator =
+        Math.max(
+            scenes.length - 1,
+            1
+        );
+
+
+    const progress =
+        (
+            state.currentScene /
+            denominator
+        ) * 100;
+
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            `${progress}%`;
+
+    }
+
+}
+
+
+/* =============================================================
+   STAGE 1 — CLUE
+============================================================= */
+
+function setupClue() {
+
+    if (!hiddenClue) {
+        return;
+    }
+
+
+    hiddenClue.addEventListener(
+        "click",
+        () => {
+
+            if (state.clueFound) {
+                return;
+            }
+
+
+            state.clueFound = true;
+
+
+            hiddenClue.classList.add(
+                "found"
+            );
+
+
+            if (clueMessage) {
+
+                clueMessage.textContent =
+                    "You found it...";
+
+                clueMessage.classList.add(
+                    "success"
+                );
+
+            }
+
+
+            createBurst(
+                hiddenClue
+            );
+
+
+            showToast(
+                `I knew you would find it, ${CONFIG.name}...`
+            );
+
+
+            schedule(
+                () => {
+
+                    if (clueMessage) {
+
+                        clueMessage.textContent =
+                            "But this was only the first clue.";
+
+                    }
+
+
+                    if (memoryContinue) {
+
+                        memoryContinue.classList.remove(
+                            "hidden"
+                        );
+
+                    }
+
+                },
+                1300
+            );
+
+        }
+    );
+
+}
+
+
+/* =============================================================
+   STAGE 1 — CHOICES
+============================================================= */
+
+function setupChoices() {
+
+    const choices =
+        Array.from(
+            document.querySelectorAll(
+                ".memory-choice"
+            )
+        );
+
+
+    choices.forEach(choice => {
+
+        choice.addEventListener(
+            "click",
             () => {
 
-                navigator.serviceWorker
-                    .register("./sw.js")
-                    .then(
-                        registration => {
+                if (
+                    state.correctChoice
+                ) {
 
-                            console.log(
-                                "Service Worker registered:",
-                                registration.scope
-                            );
+                    return;
 
-                        }
-                    )
-                    .catch(
-                        error => {
+                }
 
-                            console.error(
-                                "Service Worker registration failed:",
-                                error
-                            );
 
-                        }
+                const correct =
+                    choice.dataset.correct ===
+                    "true";
+
+
+                if (correct) {
+
+                    handleCorrectChoice(
+                        choice,
+                        choices
                     );
+
+                } else {
+
+                    handleWrongChoice(
+                        choice
+                    );
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+
+/* =============================================================
+   CORRECT CHOICE
+============================================================= */
+
+function handleCorrectChoice(
+    choice,
+    choices
+) {
+
+    state.correctChoice =
+        true;
+
+
+    choice.classList.add(
+        "correct"
+    );
+
+
+    choices.forEach(item => {
+
+        item.disabled =
+            true;
+
+    });
+
+
+    if (choiceMessage) {
+
+        choiceMessage.textContent =
+            `Yes... you know ${CONFIG.name} so well.`;
+
+        choiceMessage.classList.add(
+            "success"
+        );
+
+    }
+
+
+    createBurst(
+        choice
+    );
+
+
+    if (choiceContinue) {
+
+        choiceContinue.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    showToast(
+        "That's the one ❤️"
+    );
+
+}
+
+
+/* =============================================================
+   WRONG CHOICE
+============================================================= */
+
+function handleWrongChoice(choice) {
+
+    choice.classList.remove(
+        "wrong"
+    );
+
+
+    void choice.offsetWidth;
+
+
+    choice.classList.add(
+        "wrong"
+    );
+
+
+    showToast(
+        "Not this one... look again."
+    );
+
+
+    schedule(
+        () => {
+
+            choice.classList.remove(
+                "wrong"
+            );
+
+        },
+        500
+    );
+
+}
+
+
+/* =============================================================
+   SOUND
+============================================================= */
+
+function setupSound() {
+
+    if (!soundButton) {
+        return;
+    }
+
+
+    soundButton.textContent =
+        "×";
+
+
+    soundButton.classList.add(
+        "muted"
+    );
+
+
+    soundButton.addEventListener(
+        "click",
+        () => {
+
+            state.soundEnabled =
+                !state.soundEnabled;
+
+
+            soundButton.classList.toggle(
+                "muted",
+                !state.soundEnabled
+            );
+
+
+            soundButton.textContent =
+                state.soundEnabled
+                    ? "♫"
+                    : "×";
+
+
+            document.body.classList.toggle(
+                "sound-active",
+                state.soundEnabled
+            );
+
+
+            showToast(
+                state.soundEnabled
+                    ? "Ambient mode enabled"
+                    : "Ambient mode muted"
+            );
+
+        }
+    );
+
+}
+
+
+/* =============================================================
+   STAGE 2
+============================================================= */
+
+function setupStage2() {
+
+    setupClueButton();
+
+    setupDateInput();
+
+    setupDateButton();
+
+}
+
+
+/* =============================================================
+   CLUE BUTTON
+============================================================= */
+
+function setupClueButton() {
+
+    if (!clueButton) {
+        return;
+    }
+
+
+    clueButton.addEventListener(
+        "click",
+        () => {
+
+            state.stage2Started =
+                true;
+
+
+            const next =
+                getSceneIndex(
+                    "scene-clue-input"
+                );
+
+
+            if (next !== -1) {
+
+                goToScene(
+                    next
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =============================================================
+   DATE INPUT
+============================================================= */
+
+function setupDateInput() {
+
+    if (!secretDate) {
+        return;
+    }
+
+
+    secretDate.addEventListener(
+        "input",
+        () => {
+
+            formatDateInput();
+
+            clearDateError();
+
+        }
+    );
+
+
+    secretDate.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                checkSecretDate();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =============================================================
+   DATE FORMAT
+============================================================= */
+
+function formatDateInput() {
+
+    if (!secretDate) {
+        return;
+    }
+
+
+    const oldValue =
+        secretDate.value;
+
+
+    let value =
+        oldValue
+            .replace(/\D/g, "")
+            .substring(0, 8);
+
+
+    if (value.length > 4) {
+
+        value =
+            value.substring(0, 2) +
+            "/" +
+            value.substring(2, 4) +
+            "/" +
+            value.substring(4);
+
+    } else if (value.length > 2) {
+
+        value =
+            value.substring(0, 2) +
+            "/" +
+            value.substring(2);
+
+    }
+
+
+    secretDate.value =
+        value;
+
+}
+
+
+/* =============================================================
+   DATE BUTTON
+============================================================= */
+
+function setupDateButton() {
+
+    if (!dateButton) {
+        return;
+    }
+
+
+    dateButton.addEventListener(
+        "click",
+        checkSecretDate
+    );
+
+}
+
+
+/* =============================================================
+   CHECK DATE
+============================================================= */
+
+function checkSecretDate() {
+
+    if (!secretDate) {
+        return;
+    }
+
+
+    const value =
+        normalizeDate(
+            secretDate.value
+        );
+
+
+    if (
+        value ===
+        CONFIG.birthday
+    ) {
+
+        unlockBirthday();
+
+    } else {
+
+        showDateError();
+
+    }
+
+}
+
+
+/* =============================================================
+   NORMALIZE DATE
+============================================================= */
+
+function normalizeDate(value) {
+
+    const numbers =
+        String(value)
+            .replace(/\D/g, "");
+
+
+    if (
+        numbers.length !== 8
+    ) {
+
+        return "";
+
+    }
+
+
+    return (
+        numbers.substring(0, 2) +
+        "/" +
+        numbers.substring(2, 4) +
+        "/" +
+        numbers.substring(4, 8)
+    );
+
+}
+
+
+/* =============================================================
+   DATE SUCCESS
+============================================================= */
+
+function unlockBirthday() {
+
+    if (
+        state.secretUnlocked
+    ) {
+
+        return;
+
+    }
+
+
+    state.secretUnlocked =
+        true;
+
+
+    if (dateMessage) {
+
+        dateMessage.textContent =
+            "You remembered... ❤️";
+
+        dateMessage.classList.add(
+            "success"
+        );
+
+    }
+
+
+    if (secretDate) {
+
+        secretDate.disabled =
+            true;
+
+        secretDate.classList.add(
+            "success-input"
+        );
+
+    }
+
+
+    if (dateButton) {
+
+        dateButton.disabled =
+            true;
+
+    }
+
+
+    createHeartExplosion();
+
+
+    showToast(
+        `Happy Birthday, ${CONFIG.name} ❤️`
+    );
+
+
+    schedule(
+        () => {
+
+            const next =
+                getSceneIndex(
+                    "scene-pre-reveal"
+                );
+
+
+            if (next !== -1) {
+
+                goToScene(
+                    next
+                );
+
+            }
+
+        },
+        1500
+    );
+
+
+    schedule(
+        () => {
+
+            startPreReveal();
+
+        },
+        2350
+    );
+
+}
+
+
+/* =============================================================
+   DATE ERROR
+============================================================= */
+
+function showDateError() {
+
+    if (secretDate) {
+
+        secretDate.classList.remove(
+            "input-error"
+        );
+
+
+        void secretDate.offsetWidth;
+
+
+        secretDate.classList.add(
+            "input-error"
+        );
+
+    }
+
+
+    if (dateMessage) {
+
+        dateMessage.textContent =
+            "Not quite... think about a very special day.";
+
+    }
+
+
+    showToast(
+        "Think carefully..."
+    );
+
+}
+
+
+/* =============================================================
+   CLEAR DATE ERROR
+============================================================= */
+
+function clearDateError() {
+
+    if (secretDate) {
+
+        secretDate.classList.remove(
+            "input-error"
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   PRE-REVEAL
+============================================================= */
+
+function startPreReveal() {
+
+    if (
+        state.revealStarted
+    ) {
+
+        return;
+
+    }
+
+
+    state.revealStarted =
+        true;
+
+
+    clearExperienceTimers();
+
+
+    revealMessage(
+        "Now I can finally tell you..."
+    );
+
+
+    schedule(
+        () => {
+
+            hideRevealText();
+
+        },
+        3000
+    );
+
+
+    schedule(
+        () => {
+
+            revealMessage(
+                "There was a reason for every clue."
+            );
+
+        },
+        3700
+    );
+
+
+    schedule(
+        () => {
+
+            hideRevealText();
+
+        },
+        6800
+    );
+
+
+    schedule(
+        () => {
+
+            revealMessage(
+                "Every little step led here."
+            );
+
+        },
+        7500
+    );
+
+
+    schedule(
+        () => {
+
+            if (revealHeart) {
+
+                revealHeart.classList.add(
+                    "visible"
+                );
+
+            }
+
+
+            createHeartExplosion();
+
+        },
+        9000
+    );
+
+
+    schedule(
+        () => {
+
+            revealMessage(
+                `${CONFIG.name}...`
+            );
+
+        },
+        10400
+    );
+
+
+    schedule(
+        () => {
+
+            startStage3();
+
+        },
+        13000
+    );
+
+}
+
+
+/* =============================================================
+   REVEAL MESSAGE
+============================================================= */
+
+function revealMessage(message) {
+
+    if (!revealText) {
+        return;
+    }
+
+
+    revealText.textContent =
+        "";
+
+
+    revealText.classList.remove(
+        "visible"
+    );
+
+
+    void revealText.offsetWidth;
+
+
+    revealText.classList.add(
+        "visible"
+    );
+
+
+    typeText(
+        revealText,
+        message,
+        CONFIG.typingSpeed
+    );
+
+}
+
+
+/* =============================================================
+   HIDE REVEAL
+============================================================= */
+
+function hideRevealText() {
+
+    if (!revealText) {
+        return;
+    }
+
+
+    revealText.classList.remove(
+        "visible"
+    );
+
+}
+
+
+/* =============================================================
+   TYPE TEXT
+============================================================= */
+
+function typeText(
+    element,
+    text,
+    speed
+) {
+
+    if (!element) {
+        return;
+    }
+
+
+    const interval =
+        setInterval(
+            () => {
+
+                const current =
+                    element.textContent.length;
+
+
+                if (
+                    current >= text.length
+                ) {
+
+                    clearInterval(
+                        interval
+                    );
+
+
+                    state.timers.delete(
+                        interval
+                    );
+
+
+                    return;
+
+                }
+
+
+                element.textContent +=
+                    text.charAt(current);
+
+            },
+            Math.max(
+                Number(speed) || 40,
+                10
+            )
+        );
+
+
+    trackTimer(
+        interval
+    );
+
+}
+
+
+/* =============================================================
+   STAGE 3
+============================================================= */
+
+function startStage3() {
+
+    if (
+        state.stage3Started
+    ) {
+
+        return;
+
+    }
+
+
+    state.stage3Started =
+        true;
+
+
+    const introIndex =
+        getSceneIndex(
+            "scene-memory-intro"
+        );
+
+
+    if (
+        introIndex === -1
+    ) {
+
+        return;
+
+    }
+
+
+    goToScene(
+        introIndex
+    );
+
+}
+
+
+/* =============================================================
+   STAGE 3 INTRO
+============================================================= */
+
+function startStage3Intro() {
+
+    if (!memoryIntroText) {
+        return;
+    }
+
+
+    clearExperienceTimers();
+
+
+    memoryIntroText.classList.remove(
+        "visible"
+    );
+
+
+    memoryIntroText.textContent =
+        "";
+
+
+    schedule(
+        () => {
+
+            showMemoryIntroText(
+                "I kept something for you..."
+            );
+
+        },
+        700
+    );
+
+
+    schedule(
+        () => {
+
+            hideMemoryIntroText();
+
+        },
+        3200
+    );
+
+
+    schedule(
+        () => {
+
+            showMemoryIntroText(
+                "A few moments I never want to forget."
+            );
+
+        },
+        4100
+    );
+
+
+    schedule(
+        () => {
+
+            hideMemoryIntroText();
+
+        },
+        7200
+    );
+
+
+    schedule(
+        () => {
+
+            const next =
+                getSceneIndex(
+                    "scene-memory-1"
+                );
+
+
+            if (
+                next !== -1
+            ) {
+
+                goToScene(
+                    next
+                );
+
+            }
+
+        },
+        8100
+    );
+
+}
+
+
+/* =============================================================
+   MEMORY INTRO TEXT
+============================================================= */
+
+function showMemoryIntroText(text) {
+
+    if (!memoryIntroText) {
+        return;
+    }
+
+
+    memoryIntroText.textContent =
+        "";
+
+
+    memoryIntroText.classList.remove(
+        "visible"
+    );
+
+
+    void memoryIntroText.offsetWidth;
+
+
+    memoryIntroText.classList.add(
+        "visible"
+    );
+
+
+    typeText(
+        memoryIntroText,
+        text,
+        38
+    );
+
+}
+
+
+/* =============================================================
+   STAGE 3 BUTTONS
+============================================================= */
+
+function setupStage3() {
+
+    if (memory1Button) {
+
+        memory1Button.addEventListener(
+            "click",
+            () => {
+
+                goToMemoryScene(
+                    "scene-memory-2"
+                );
 
             }
         );
 
     }
+
+
+    if (memory2Button) {
+
+        memory2Button.addEventListener(
+            "click",
+            () => {
+
+                goToMemoryScene(
+                    "scene-memory-3"
+                );
+
+            }
+        );
+
+    }
+
+
+    if (memory3Button) {
+
+        memory3Button.addEventListener(
+            "click",
+            () => {
+
+                goToMemoryScene(
+                    "scene-memory-final"
+                );
+
+            }
+        );
+
+    }
+
+
+    if (memoryFinalButton) {
+
+        memoryFinalButton.addEventListener(
+            "click",
+            finishMemoryStage
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   MEMORY NAVIGATION
+============================================================= */
+
+function goToMemoryScene(id) {
+
+    const index =
+        getSceneIndex(id);
+
+
+    if (
+        index === -1
+    ) {
+
+        return;
+
+    }
+
+
+    goToScene(
+        index
+    );
+
+}
+
+
+/* =============================================================
+   MEMORY ANIMATION
+============================================================= */
+
+function animateMemoryScene(
+    scene,
+    number
+) {
+
+    if (!scene) {
+        return;
+    }
+
+
+    scene.classList.remove(
+        "memory-cinematic"
+    );
+
+
+    void scene.offsetWidth;
+
+
+    scene.classList.add(
+        "memory-cinematic"
+    );
+
+
+    document.body.dataset.memory =
+        String(number);
+
+
+    const caption =
+        scene.querySelector(
+            ".caption-main"
+        );
+
+
+    if (caption) {
+
+        caption.classList.remove(
+            "caption-reveal"
+        );
+
+
+        void caption.offsetWidth;
+
+
+        caption.classList.add(
+            "caption-reveal"
+        );
+
+    }
+
+
+    createMemoryParticles(
+        scene,
+        number
+    );
+
+}
+
+
+/* =============================================================
+   FINAL MEMORY
+============================================================= */
+
+function animateFinalMemoryScene() {
+
+    document.body.dataset.memory =
+        "final";
+
+
+    if (memoryFinalButton) {
+
+        memoryFinalButton.disabled =
+            false;
+
+    }
+
+
+    createHeartExplosion();
+
+
+    showToast(
+        `There is something I still want to tell you, ${CONFIG.name}...`
+    );
+
+}
+
+
+/* =============================================================
+   FINISH
+============================================================= */
+
+function finishMemoryStage() {
+
+    if (
+        state.experienceComplete
+    ) {
+
+        return;
+
+    }
+
+
+    state.experienceComplete =
+        true;
+
+
+    if (memoryFinalButton) {
+
+        memoryFinalButton.disabled =
+            true;
+
+    }
+
+
+    if (transition) {
+
+        transition.classList.add(
+            "active"
+        );
+
+    }
+
+
+    const timer =
+        setTimeout(
+            () => {
+
+                if (transition) {
+
+                    transition.classList.remove(
+                        "active"
+                    );
+
+                }
+
+
+                showFinalMessage();
+
+            },
+            1200
+        );
+
+
+    trackTimer(
+        timer
+    );
+
+}
+
+
+/* =============================================================
+   FINAL MESSAGE
+============================================================= */
+
+function showFinalMessage() {
+
+    const finalScene =
+        document.getElementById(
+            "scene-memory-final"
+        );
+
+
+    if (!finalScene) {
+        return;
+    }
+
+
+    const heading =
+        finalScene.querySelector(
+            "h2"
+        );
+
+
+    const paragraphs =
+        finalScene.querySelectorAll(
+            ".story-text"
+        );
+
+
+    if (heading) {
+
+        heading.textContent =
+            `Happy Birthday, ${CONFIG.name}.`;
+
+    }
+
+
+    if (
+        paragraphs.length >= 1
+    ) {
+
+        paragraphs[0].textContent =
+            "Some people become memories.";
+
+    }
+
+
+    if (
+        paragraphs.length >= 2
+    ) {
+
+        paragraphs[1].textContent =
+            "You became one of my favourite parts of life.";
+
+    }
+
+
+    if (memoryFinalButton) {
+
+        memoryFinalButton.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    createMassiveHeartScene();
+
+
+    showToast(
+        `Happy Birthday, ${CONFIG.name} ❤️`
+    );
+
+}
+
+
+/* =============================================================
+   FLOATING HEARTS
+============================================================= */
+
+function createFloatingHearts() {
+
+    const existing =
+        document.querySelector(
+            ".js-heart-layer"
+        );
+
+
+    if (existing) {
+        existing.remove();
+    }
+
+
+    const container =
+        document.createElement(
+            "div"
+        );
+
+
+    container.className =
+        "js-heart-layer";
+
+
+    container.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.appendChild(
+        container
+    );
+
+
+    for (
+        let i = 0;
+        i < 14;
+        i++
+    ) {
+
+        const heart =
+            document.createElement(
+                "span"
+            );
+
+
+        heart.className =
+            "js-floating-heart";
+
+
+        heart.textContent =
+            i % 3 === 0
+                ? "♥"
+                : "♡";
+
+
+        heart.style.left =
+            `${Math.random() * 100}%`;
+
+
+        heart.style.animationDelay =
+            `${Math.random() * 12}s`;
+
+
+        heart.style.animationDuration =
+            `${10 + Math.random() * 10}s`;
+
+
+        heart.style.fontSize =
+            `${8 + Math.random() * 12}px`;
+
+
+        container.appendChild(
+            heart
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   PARTICLES
+============================================================= */
+
+function createRomanticParticles() {
+
+    const existing =
+        document.querySelector(
+            ".js-particle-layer"
+        );
+
+
+    if (existing) {
+        existing.remove();
+    }
+
+
+    const container =
+        document.createElement(
+            "div"
+        );
+
+
+    container.className =
+        "js-particle-layer";
+
+
+    container.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.appendChild(
+        container
+    );
+
+
+    for (
+        let i = 0;
+        i < CONFIG.particles.count;
+        i++
+    ) {
+
+        const particle =
+            document.createElement(
+                "span"
+            );
+
+
+        particle.className =
+            "js-particle";
+
+
+        particle.style.left =
+            `${Math.random() * 100}%`;
+
+
+        particle.style.top =
+            `${Math.random() * 100}%`;
+
+
+        particle.style.animationDelay =
+            `${Math.random() * 8}s`;
+
+
+        particle.style.animationDuration =
+            `${5 + Math.random() * 7}s`;
+
+
+        const size =
+            1 +
+            Math.random() * 3;
+
+
+        particle.style.width =
+            `${size}px`;
+
+
+        particle.style.height =
+            `${size}px`;
+
+
+        container.appendChild(
+            particle
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   MEMORY PARTICLES
+============================================================= */
+
+function createMemoryParticles(
+    scene,
+    memoryNumber
+) {
+
+    scene
+        .querySelectorAll(
+            ".memory-particle"
+        )
+        .forEach(
+            element =>
+                element.remove()
+        );
+
+
+    for (
+        let i = 0;
+        i < 16;
+        i++
+    ) {
+
+        const particle =
+            document.createElement(
+                "span"
+            );
+
+
+        particle.className =
+            "memory-particle";
+
+
+        particle.style.left =
+            `${10 + Math.random() * 80}%`;
+
+
+        particle.style.top =
+            `${15 + Math.random() * 70}%`;
+
+
+        particle.style.animationDelay =
+            `${Math.random() * 3}s`;
+
+
+        particle.dataset.memory =
+            memoryNumber;
+
+
+        scene.appendChild(
+            particle
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   HEART EXPLOSION
+============================================================= */
+
+function createHeartExplosion() {
+
+    const layer =
+        document.createElement(
+            "div"
+        );
+
+
+    layer.className =
+        "heart-explosion";
+
+
+    layer.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.appendChild(
+        layer
+    );
+
+
+    for (
+        let i = 0;
+        i < 24;
+        i++
+    ) {
+
+        const heart =
+            document.createElement(
+                "span"
+            );
+
+
+        heart.textContent =
+            i % 2 === 0
+                ? "♥"
+                : "♡";
+
+
+        heart.style.setProperty(
+            "--x",
+            `${(Math.random() - .5) * 500}px`
+        );
+
+
+        heart.style.setProperty(
+            "--y",
+            `${(Math.random() - .5) * 500}px`
+        );
+
+
+        heart.style.setProperty(
+            "--r",
+            `${Math.random() * 720 - 360}deg`
+        );
+
+
+        heart.style.animationDelay =
+            `${Math.random() * .25}s`;
+
+
+        layer.appendChild(
+            heart
+        );
+
+    }
+
+
+    schedule(
+        () => {
+
+            layer.remove();
+
+        },
+        1800
+    );
+
+}
+
+
+/* =============================================================
+   FINAL HEART
+============================================================= */
+
+function createMassiveHeartScene() {
+
+    const existing =
+        document.querySelector(
+            ".final-heart-animation"
+        );
+
+
+    if (existing) {
+
+        existing.remove();
+
+    }
+
+
+    const heart =
+        document.createElement(
+            "div"
+        );
+
+
+    heart.className =
+        "final-heart-animation";
+
+
+    heart.textContent =
+        "♥";
+
+
+    heart.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.appendChild(
+        heart
+    );
+
+
+    schedule(
+        () => {
+
+            heart.classList.add(
+                "visible"
+            );
+
+        },
+        100
+    );
+
+
+    for (
+        let i = 0;
+        i < 35;
+        i++
+    ) {
+
+        const spark =
+            document.createElement(
+                "span"
+            );
+
+
+        spark.className =
+            "final-spark";
+
+
+        spark.style.setProperty(
+            "--x",
+            `${(Math.random() - .5) * 700}px`
+        );
+
+
+        spark.style.setProperty(
+            "--y",
+            `${(Math.random() - .5) * 700}px`
+        );
+
+
+        heart.appendChild(
+            spark
+        );
+
+    }
+
+}
+
+
+/* =============================================================
+   BURST
+============================================================= */
+
+function createBurst(source) {
+
+    if (!source) {
+        return;
+    }
+
+
+    const rect =
+        source.getBoundingClientRect();
+
+
+    const layer =
+        document.createElement(
+            "div"
+        );
+
+
+    layer.className =
+        "micro-burst";
+
+
+    layer.style.left =
+        `${rect.left + rect.width / 2}px`;
+
+
+    layer.style.top =
+        `${rect.top + rect.height / 2}px`;
+
+
+    layer.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.appendChild(
+        layer
+    );
+
+
+    for (
+        let i = 0;
+        i < 10;
+        i++
+    ) {
+
+        const dot =
+            document.createElement(
+                "span"
+            );
+
+
+        dot.style.setProperty(
+            "--angle",
+            `${i * 36}deg`
+        );
+
+
+        layer.appendChild(
+            dot
+        );
+
+    }
+
+
+    schedule(
+        () => {
+
+            layer.remove();
+
+        },
+        1000
+    );
+
+}
+
+
+/* =============================================================
+   BUTTON EFFECTS
+============================================================= */
+
+function setupButtonEffects() {
+
+    document
+        .querySelectorAll("button")
+        .forEach(button => {
+
+            button.addEventListener(
+                "pointerdown",
+                () => {
+
+                    button.classList.add(
+                        "pressing"
+                    );
+
+                }
+            );
+
+
+            button.addEventListener(
+                "pointerup",
+                () => {
+
+                    button.classList.remove(
+                        "pressing"
+                    );
+
+                }
+            );
+
+
+            button.addEventListener(
+                "pointercancel",
+                () => {
+
+                    button.classList.remove(
+                        "pressing"
+                    );
+
+                }
+            );
+
+
+            button.addEventListener(
+                "pointerleave",
+                () => {
+
+                    button.classList.remove(
+                        "pressing"
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =============================================================
+   TOAST
+============================================================= */
+
+let toastTimer =
+    null;
+
+
+function showToast(message) {
+
+    if (!toast) {
+        return;
+    }
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.remove(
+        "show"
+    );
+
+
+    void toast.offsetWidth;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    if (toastTimer) {
+
+        clearTimeout(
+            toastTimer
+        );
+
+    }
+
+
+    toastTimer =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+                toastTimer = null;
+
+            },
+            CONFIG.toastDuration
+        );
+
+}
+
+
+/* =============================================================
+   SWIPE NAVIGATION
+============================================================= */
+
+function setupSwipeNavigation() {
+
+    document.addEventListener(
+        "touchstart",
+        event => {
+
+            if (
+                event.touches.length !== 1
+            ) {
+
+                return;
+
+            }
+
+
+            state.touchStartX =
+                event.touches[0].clientX;
+
+
+            state.touchStartY =
+                event.touches[0].clientY;
+
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    document.addEventListener(
+        "touchend",
+        event => {
+
+            if (
+                event.changedTouches.length !== 1
+            ) {
+
+                return;
+
+            }
+
+
+            const endX =
+                event.changedTouches[0].clientX;
+
+
+            const endY =
+                event.changedTouches[0].clientY;
+
+
+            const deltaX =
+                state.touchStartX -
+                endX;
+
+
+            const deltaY =
+                state.touchStartY -
+                endY;
+
+
+            /*
+             * Only vertical upward swipes.
+             */
+
+            if (
+                Math.abs(deltaX) >
+                Math.abs(deltaY)
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                deltaY <
+                CONFIG.swipeThreshold
+            ) {
+
+                return;
+
+            }
+
+
+            const active =
+                document.activeElement;
+
+
+            if (
+                active &&
+                (
+                    active.tagName === "INPUT" ||
+                    active.tagName === "TEXTAREA"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            navigateForward();
+
+        },
+        {
+            passive: true
+        }
+    );
+
+}
+
+
+/* =============================================================
+   FORWARD NAVIGATION
+============================================================= */
+
+function navigateForward() {
+
+    const next =
+        state.currentScene + 1;
+
+
+    if (
+        next >= scenes.length
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !canEnterScene(next)
+    ) {
+
+        return;
+
+    }
+
+
+    goToScene(
+        next
+    );
+
+}
+
+
+/* =============================================================
+   KEYBOARD
+============================================================= */
+
+function setupKeyboardNavigation() {
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            const active =
+                document.activeElement;
+
+
+            if (
+                active &&
+                (
+                    active.tagName === "INPUT" ||
+                    active.tagName === "TEXTAREA"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                event.key === "ArrowRight" ||
+                event.key === "ArrowDown" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+                navigateForward();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =============================================================
+   TIMER MANAGEMENT
+============================================================= */
+
+function trackTimer(timer) {
+
+    state.timers.add(
+        timer
+    );
+
+
+    return timer;
+
+}
+
+
+function schedule(
+    callback,
+    delay
+) {
+
+    const timer =
+        setTimeout(
+            () => {
+
+                state.timers.delete(
+                    timer
+                );
+
+
+                try {
+
+                    callback();
+
+                } catch (error) {
+
+                    console.error(
+                        "Scheduled birthday effect failed:",
+                        error
+                    );
+
+                }
+
+            },
+            Math.max(
+                0,
+                Number(delay) || 0
+            )
+        );
+
+
+    trackTimer(
+        timer
+    );
+
+
+    return timer;
+
+}
+
+
+/* =============================================================
+   CLEAR TIMERS
+============================================================= */
+
+function clearExperienceTimers() {
+
+    state.timers.forEach(
+        timer => {
+
+            clearTimeout(
+                timer
+            );
+
+            clearInterval(
+                timer
+            );
+
+        }
+    );
+
+
+    state.timers.clear();
+
+}
+
+
+/* =============================================================
+   VISIBILITY HANDLING
+============================================================= */
+
+/*
+ * IMPORTANT:
+ *
+ * The original version cleared all timers whenever
+ * the page became hidden.
+ *
+ * That caused cinematic sequences to stop permanently.
+ *
+ * Production behaviour:
+ *
+ * - Do not destroy application state.
+ * - Do not clear the current experience sequence.
+ * - Browser automatically throttles background timers.
+ */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.hidden
+        ) {
+
+            document.body.classList.add(
+                "page-hidden"
+            );
+
+        } else {
+
+            document.body.classList.remove(
+                "page-hidden"
+            );
+
+        }
+
+    }
+);
+
+
+/* =============================================================
+   PAGE EXIT
+============================================================= */
+
+window.addEventListener(
+    "pagehide",
+    () => {
+
+        clearExperienceTimers();
+
+    }
+);
+
+
+/* =============================================================
+   ERROR PROTECTION
+============================================================= */
+
+window.addEventListener(
+    "error",
+    event => {
+
+        console.error(
+            "Birthday experience error:",
+            event.error || event.message
+        );
+
+    }
+);
+
+
+window.addEventListener(
+    "unhandledrejection",
+    event => {
+
+        console.error(
+            "Birthday experience promise error:",
+            event.reason
+        );
+
+    }
+);
+
+
+/* =============================================================
+   DEBUG INFORMATION
+============================================================= */
+
+console.log(
+    "%cBirthday Experience",
+    "font-size:18px;font-weight:bold;"
+);
+
+
+console.log(
+    `Created for ${CONFIG.name}`
+);
+
+
+console.log(
+    `Birthday: ${CONFIG.birthdayDisplay}`
+);
+
 </script>
 
 </body>
+
 </html>
