@@ -1,0 +1,19 @@
+{
+    "name": "A Birthday Surprise ❤️",
+    "short_name": "Birthday ❤️",
+    "description": "A special birthday surprise made with love.",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#050507",
+    "theme_color": "#061714",
+    "icons": [
+        {
+            "src": "photo1.JPG",
+            "sizes": "512x512",
+            "type": "image/jpeg",
+            "purpose": "any"
+        }
+    ]
+}

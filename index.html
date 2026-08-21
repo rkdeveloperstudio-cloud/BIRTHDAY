@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+     <meta
+        name="theme-color"
+        content="#061714">
+
+    <link
+        rel="manifest"
+        href="manifest.json">
+
+    <title>
+        A Birthday Surprise ❤️
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+</head>
+
+<body>
+
+    <!-- =========================================================
+         BACKGROUND
+    ========================================================== -->
+
+    <div class="background">
+        <div class="stars"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+
+    <!-- =========================================================
+         TOP UI
+    ========================================================== -->
+
+    <header class="top-bar">
+
+        <div class="chapter">
+            <span id="chapterNumber">00</span>
+            <span class="chapter-line"></span>
+            <span id="chapterName">BEGINNING</span>
+        </div>
+
+        <button
+            id="soundButton"
+            class="icon-button"
+            aria-label="Toggle sound">
+            ♫
+        </button>
+
+    </header>
+
+
+    <!-- =========================================================
+         PROGRESS
+    ========================================================== -->
+
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+
+    <!-- =========================================================
+         MAIN EXPERIENCE
+    ========================================================== -->
+
+    <main id="app">
+
+        <!-- =====================================================
+             SCENE 0
+        ====================================================== -->
+
+        <section
+            id="scene-0"
+            class="scene active"
+            data-chapter="00"
+            data-name="BEGINNING">
+
+            <div class="scene-content intro">
+
+                <div class="small-label">
+                    A LITTLE SURPRISE
+                </div>
+
+                <h1>
+                    I need you<br>
+                    to do something.
+                </h1>
+
+                <p class="subtext">
+                    But first...
+                </p>
+
+                <div class="pause-space"></div>
+
+                <p class="whisper">
+                    Don't close this.
+                </p>
+
+                <button
+                    class="primary-button"
+                    data-next="1">
+
+                    BEGIN
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SCENE 1
+        ====================================================== -->
+
+        <section
+            id="scene-1"
+            class="scene"
+            data-chapter="01"
+            data-name="THE FIRST CLUE">
+
+            <div class="scene-content">
+
+                <div class="chapter-number">
+                    01
+                </div>
+
+                <h2>
+                    Tonight,
+                    <br>
+                    I need you to trust me.
+                </h2>
+
+                <p class="story-text">
+                    There are a few things I want you
+                    to remember.
+                </p>
+
+                <p class="story-text muted">
+                    But I'm not going to show you
+                    everything yet.
+                </p>
+
+                <div class="mystery-symbol">
+                    <div class="symbol-ring"></div>
+                    <span>?</span>
+                </div>
+
+                <button
+                    class="primary-button"
+                    data-next="2">
+
+                    SHOW ME
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SCENE 2
+        ====================================================== -->
+
+        <section
+            id="scene-2"
+            class="scene"
+            data-chapter="02"
+            data-name="THE MEMORY">
+
+            <div class="scene-content">
+
+                <div class="chapter-number">
+                    02
+                </div>
+
+                <h2>
+                    Look carefully.
+                </h2>
+
+                <p class="story-text">
+                    Something important is hidden
+                    in this memory.
+                </p>
+
+
+                <!-- PLACEHOLDER PHOTO -->
+                <div
+                    id="memoryPhoto"
+                    class="memory-photo">
+
+                    <div class="photo-placeholder">
+
+                        <div class="photo-icon">
+                            ♡
+                        </div>
+
+                        <span>
+                            YOUR PHOTO
+                        </span>
+
+                        <small>
+                            Replace this area with
+                            your first memory photo
+                        </small>
+
+                    </div>
+
+
+                    <!-- Hidden clue -->
+                    <button
+                        id="hiddenClue"
+                        class="hidden-clue"
+                        aria-label="Find the hidden clue">
+
+                        ✦
+
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="clueMessage"
+                    class="clue-message">
+
+                    Find the little light.
+                </p>
+
+
+                <button
+                    id="memoryContinue"
+                    class="primary-button hidden"
+                    data-next="3">
+
+                    I FOUND IT
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SCENE 3
+        ====================================================== -->
+
+        <section
+            id="scene-3"
+            class="scene"
+            data-chapter="03"
+            data-name="A QUESTION">
+
+            <div class="scene-content">
+
+                <div class="chapter-number">
+                    03
+                </div>
+
+                <h2>
+                    Do you remember?
+                </h2>
+
+                <p class="story-text">
+                    Every beautiful story has
+                    a moment where everything changes.
+                </p>
+
+                <p class="question">
+                    Which one feels like
+                    <strong>us?</strong>
+                </p>
+
+
+                <div class="choice-grid">
+
+                    <button
+                        class="memory-choice"
+                        data-correct="false">
+
+                        <span>01</span>
+                        <div class="choice-image">
+                            ♡
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="memory-choice"
+                        data-correct="true">
+
+                        <span>02</span>
+                        <div class="choice-image">
+                            ✦
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="memory-choice"
+                        data-correct="false">
+
+                        <span>03</span>
+                        <div class="choice-image">
+                            ♡
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="memory-choice"
+                        data-correct="false">
+
+                        <span>04</span>
+                        <div class="choice-image">
+                            ✧
+                        </div>
+
+                    </button>
+
+                </div>
+
+
+                <p
+                    id="choiceMessage"
+                    class="choice-message">
+
+                </p>
+
+
+                <button
+                    id="choiceContinue"
+                    class="primary-button hidden"
+                    data-next="4">
+
+                    CONTINUE
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SCENE 4
+        ====================================================== -->
+
+        <section
+            id="scene-4"
+            class="scene"
+            data-chapter="04"
+            data-name="THERE IS MORE">
+
+            <div class="scene-content">
+
+                <div class="chapter-number">
+                    04
+                </div>
+
+                <div class="breathing-heart">
+                    ♥
+                </div>
+
+                <h2>
+                    You found it.
+                </h2>
+
+                <p class="story-text">
+
+                    But that was only
+                    the beginning.
+
+                </p>
+
+                <p class="story-text highlight">
+
+                    There is much more
+                    waiting for you.
+
+                </p>
+
+                <div class="countdown-dots">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+                <button
+                    class="primary-button"
+                    data-next="5">
+
+                    KEEP GOING
+
+                    <span>→</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SCENE 5
+        ====================================================== -->
+
+       <!-- =====================================================
+     STAGE 2 — FINAL LOCK
+====================================================== -->
+
+<section
+    id="scene-5"
+    class="scene"
+    data-chapter="05"
+    data-name="THE SECRET">
+
+    <div class="scene-content final-mystery">
+
+        <div class="chapter-number">
+            05
+        </div>
+
+        <div class="lock" id="mainLock">
+
+            <div class="lock-body"></div>
+
+            <div class="lock-ring"></div>
+
+        </div>
+
+        <h2 id="lockTitle">
+            One last thing...
+        </h2>
+
+        <p
+            id="lockText"
+            class="story-text">
+
+            I promise you,
+            this is worth discovering.
+
+        </p>
+
+        <button
+            id="finalButton"
+            class="primary-button">
+
+            UNLOCK
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 2 — SECRET
+====================================================== -->
+
+<section
+    id="scene-secret"
+    class="scene secret-scene"
+    data-chapter="06"
+    data-name="THE CLUE">
+
+    <div class="scene-content">
+
+        <div class="chapter-number">
+            06
+        </div>
+
+        <div class="secret-symbol">
+            ✦
+        </div>
+
+        <h2>
+            You're still here.
+        </h2>
+
+        <p class="story-text">
+
+            Good.
+
+        </p>
+
+        <p class="story-text muted">
+
+            But you still haven't
+            discovered the real secret.
+
+        </p>
+
+        <div class="secret-card">
+
+            <div class="secret-card-label">
+                YOUR NEXT CLUE
+            </div>
+
+            <div class="secret-card-text">
+                Something important
+                happened on a special day.
+            </div>
+
+            <div class="secret-hint">
+                You already know the answer.
+            </div>
+
+        </div>
+
+        <button
+            id="clueButton"
+            class="primary-button">
+
+            FIND THE CLUE
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 2 — SECRET INPUT
+====================================================== -->
+
+<section
+    id="scene-clue-input"
+    class="scene"
+    data-chapter="07"
+    data-name="THE ANSWER">
+
+    <div class="scene-content">
+
+        <div class="chapter-number">
+            07
+        </div>
+
+        <h2>
+            Think carefully.
+        </h2>
+
+        <p class="story-text">
+
+            What date would you never forget?
+
+        </p>
+
+        <div class="date-input-wrapper">
+
+            <input
+                id="secretDate"
+                class="secret-input"
+                type="text"
+                inputmode="numeric"
+                maxlength="10"
+                placeholder="DD / MM / YYYY"
+                autocomplete="off">
+
+        </div>
+
+        <p
+            id="dateMessage"
+            class="date-message">
+
+        </p>
+
+        <button
+            id="dateButton"
+            class="primary-button">
+
+            UNLOCK
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 2 — ANSWER
+====================================================== -->
+
+<section
+    id="scene-answer"
+    class="scene"
+    data-chapter="08"
+    data-name="THE ANSWER">
+
+    <div class="scene-content answer-scene">
+
+        <div class="chapter-number">
+            08
+        </div>
+
+        <div class="answer-heart">
+            ♥
+        </div>
+
+        <h2>
+            That's it.
+        </h2>
+
+        <p class="story-text">
+
+            You remembered.
+
+        </p>
+
+        <p class="story-text highlight">
+
+            And now...
+            I can finally tell you
+            why I made all of this.
+
+        </p>
+
+        <div class="breathing-dots">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+        <button
+            id="revealButton"
+            class="primary-button">
+
+            TELL ME
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 2 — PRE REVEAL
+====================================================== -->
+
+<section
+    id="scene-pre-reveal"
+    class="scene pre-reveal"
+    data-chapter="09"
+    data-name="ONE LAST MOMENT">
+
+    <div class="scene-content">
+
+        <div
+            id="revealText"
+            class="reveal-text">
+
+        </div>
+
+        <div
+            id="revealHeart"
+            class="reveal-heart">
+
+            ♥
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     STAGE 3 — MEMORY INTRO
+====================================================== -->
+
+<section
+    id="scene-memory-intro"
+    class="scene stage3-scene"
+    data-chapter="10"
+    data-name="A MEMORY">
+
+    <div class="scene-content">
+
+        <div class="memory-intro">
+
+            <div class="memory-small-text">
+                I kept something for you...
+            </div>
+
+            <div
+                id="memoryIntroText"
+                class="memory-big-text">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 3 — PHOTO MEMORY 1
+====================================================== -->
+
+<section
+    id="scene-memory-1"
+    class="scene photo-memory-scene"
+    data-chapter="11"
+    data-name="A MOMENT">
+
+    <div class="photo-memory">
+
+        <div class="photo-number">
+            MEMORY 01
+        </div>
+
+        <div class="photo-frame">
+
+            <img
+                src="photo1.JPG"
+                alt="A special memory"
+                class="memory-photo">
+
+            <div class="photo-overlay"></div>
+
+        </div>
+
+        <div class="photo-caption">
+
+            <div class="caption-small">
+                DO YOU REMEMBER THIS?
+            </div>
+
+            <div class="caption-main">
+                Some moments become
+                memories forever.
+            </div>
+
+        </div>
+
+        <button
+            id="memory1Button"
+            class="primary-button">
+
+            I REMEMBER
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 3 — PHOTO MEMORY 2
+====================================================== -->
+
+<section
+    id="scene-memory-2"
+    class="scene photo-memory-scene"
+    data-chapter="12"
+    data-name="ANOTHER MOMENT">
+
+    <div class="photo-memory">
+
+        <div class="photo-number">
+            MEMORY 02
+        </div>
+
+        <div class="photo-frame">
+
+            <img
+                src="photo2.JPG"
+                alt="Another special memory"
+                class="memory-photo">
+
+            <div class="photo-overlay"></div>
+
+        </div>
+
+        <div class="photo-caption">
+
+            <div class="caption-small">
+                AND THEN THERE WAS THIS...
+            </div>
+
+            <div class="caption-main">
+                I would choose
+                this moment again.
+            </div>
+
+        </div>
+
+        <button
+            id="memory2Button"
+            class="primary-button">
+
+            ONE MORE
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 3 — PHOTO MEMORY 3
+====================================================== -->
+
+<section
+    id="scene-memory-3"
+    class="scene photo-memory-scene"
+    data-chapter="13"
+    data-name="THE MEMORIES">
+
+    <div class="photo-memory">
+
+        <div class="photo-number">
+            MEMORY 03
+        </div>
+
+        <div class="photo-frame">
+
+            <img
+                src="photo3.JPG"
+                alt="A beautiful memory"
+                class="memory-photo">
+
+            <div class="photo-overlay"></div>
+
+        </div>
+
+        <div class="photo-caption">
+
+            <div class="caption-small">
+                THREE MEMORIES
+            </div>
+
+            <div class="caption-main">
+                And somehow...
+                I still want more.
+            </div>
+
+        </div>
+
+        <button
+            id="memory3Button"
+            class="primary-button">
+
+            CONTINUE
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STAGE 3 — SOMETHING MISSING
+====================================================== -->
+
+<section
+    id="scene-memory-final"
+    class="scene stage3-final"
+    data-chapter="14"
+    data-name="ONE THING">
+
+    <div class="scene-content">
+
+        <div class="final-memory-text">
+
+            <div class="memory-small-text">
+                But...
+            </div>
+
+            <h2>
+                Something is missing.
+            </h2>
+
+            <p class="story-text">
+                Photos can remind us of
+                beautiful moments.
+            </p>
+
+            <p class="story-text highlight">
+                But they can't say
+                everything I want to say.
+            </p>
+
+        </div>
+
+        <button
+            id="memoryFinalButton"
+            class="primary-button">
+
+            LISTEN
+
+            <span>→</span>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         FLASH / TRANSITION
+    ========================================================== -->
+
+    <div id="transition" class="transition"></div>
+
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+
+    <div
+        id="toast"
+        class="toast">
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+<script>
+    if ("serviceWorker" in navigator) {
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                navigator.serviceWorker
+                    .register("./sw.js")
+                    .then(
+                        registration => {
+
+                            console.log(
+                                "Service Worker registered:",
+                                registration.scope
+                            );
+
+                        }
+                    )
+                    .catch(
+                        error => {
+
+                            console.error(
+                                "Service Worker registration failed:",
+                                error
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+    }
+</script>
+
+</body>
+</html>
