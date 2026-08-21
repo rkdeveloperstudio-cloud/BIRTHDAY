@@ -18,9 +18,9 @@ const APP_FILES = [
 
     "./manifest.json",
 
-    "./photo1.JPG",
-    "./photo2.JPG",
-    "./photo3.JPG"
+    "./photo1.jpg",
+    "./photo2.jpg",
+    "./photo3.jpg"
 
 ];
 
